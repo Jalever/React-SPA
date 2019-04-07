@@ -1,0 +1,22 @@
+.customeTable {
+	width: 85%;
+	margin: 10px auto;
+	border: 1px solid #00ffff;
+	font-size: 15px;
+	cursor: default;
+	background-color: #fff;
+	& > thead {
+		background-color: #E0FFFF;
+		font-weight: bold;
+	}
+	& > tr,td {
+		padding: 10px;
+		text-align: center;
+		border: 1px solid #F0F8FF;
+	}
+}
+
+.customImage {
+	width: 80%;
+	margin: 10px auto;
+}
