@@ -36,6 +36,8 @@ class TableComponent extends React.Component {
 			xhr.onreadystatechange = () => {
 				if(xhr.readyState === 4) {
 					if(xhr.status === 200) {
+						console.dir("xhr: ")
+						console.dir(xhr)
 						let res = JSON.parse(xhr.responseText);
 						resolve(res.userInfo);
 					} else {

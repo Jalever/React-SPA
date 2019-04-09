@@ -2,15 +2,21 @@ import React from "react";
 import "./style.scss";
 
 import {
-	Link
+	Link,
+	Redirect
 } from "react-router-dom";
 
 import {
 	Layout,
-	Menu
+	Menu,
+	Button,
+	Icon
 } from "antd";
 import "antd/dist/antd.css";
 
+import { SIGNOUT_BUTTON } from "./../../constants/todolist.jsx";
+
+import "./style.scss";
 
 const {
 	Header
@@ -20,7 +26,7 @@ class HeaderComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-
+			
 		};
 	}
 
@@ -28,6 +34,21 @@ class HeaderComponent extends React.Component {
 		return(
 				<Header className="header">
 					<div className="logo" />
+
+					{
+						<span
+							className="floatRight"
+						>
+							<Button
+								type="primary"
+								style={{ borderRadius: "0" }}
+							>
+								<Link to="/login">
+									{ SIGNOUT_BUTTON }<Icon type="right" />
+								</Link>
+							</Button>
+						</span>
+					}
 					<Menu
 						theme="dark"
 						mode="horizontal"
@@ -37,7 +58,7 @@ class HeaderComponent extends React.Component {
 						<Menu.Item
 							key="1"
 						>
-							<Link to="/">Home</Link>
+							<Link to="/table">Table</Link>
 						</Menu.Item>
 
 						<Menu.Item
