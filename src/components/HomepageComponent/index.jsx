@@ -62,9 +62,9 @@ const HomepageComponent = ({match}) => {
 			<Layout>
 				<HeaderComponent match={match}/>
 				<Switch>
-					<Route exact path={`${match.path}`} component={TableComponent}/>
-					<Route path={`${match.path}/images`} component={ImageComponent}/>
-					<Route path={`${match.path}/todolist`} component={TodoContentComponent}/>
+					<Route exact path="/home" component={TableComponent}/>
+					<Route path="/home/images" component={ImageComponent}/>
+					<Route path="/home/todolist" component={TodoContentComponent}/>
 				</Switch>
 				<FooterComponent />
 			</Layout>

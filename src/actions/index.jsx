@@ -1,6 +1,7 @@
 import {
 	ADD_TODO,
 	TOGGLE_TODO,
+	ADD_USER_INFO,
 	SET_FILTER
 } from "./actionTypes.jsx";
 
@@ -25,6 +26,14 @@ export const setFilter = filter => ({
 	type: SET_FILTER,
 	payload: {
 		filter
+	}
+});
+
+
+export const addUserInfo = content => ({
+	type: ADD_USER_INFO,
+	payload: {
+		content
 	}
 });
 

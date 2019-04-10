@@ -1,5 +1,9 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { addUserInfo } from "./../../actions/index.jsx";
+
 import {
 	Input, 
 	Button,
@@ -57,79 +61,29 @@ class LoginComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		// this.fetchResponseData("POST", "http://bosapi-demo.rickricks.com/boscenterservice/account/login");
-		// let response = this.fetchResponseData();
-		// response.then(function(res) {
-		// 	console.log(res.data.data);
-		// });
-
-		// let uploadValue = this.uploadRef.current;
-		// let response = this.fetchResponseData();
-		// response.then(function(res) {
-		// 	console.log(res.data.data);
-		// });
 	}
 
 	fetchResponseData() {
-		//login: 
-		// return axios.post("http://bosapi-demo.rickricks.com/boscenterservice/account/login", qs.stringify({
-		// 	name: "jalever",
-		// 	password: "jalever123",
-		// 	appKey: "l77318a9442c41b8a167903441d8f884",
-		// 	isRemember: "false"
-		// })).catch(function(err) {
-		// 	console.log(err);
-		// });
-
-		//upload file
-		// let bodyFormData = new FormData();
-		// let file = this.state.file;
-
-		// bodyFormData.set("gmodelType", "IFC");
-		// bodyFormData.set("gpriority", "1");
-		// bodyFormData.set("gmodelDB", "o16f3b64e7b6425faaac86de57f73703");
-		// bodyFormData.append("file", file);
-
-		// return axios.post("http://bosapi-demo.rickricks.com/bosdocumentservice/l77318a9442c41b8a167903441d8f884/files", bodyFormData, {
-		// 	headers: {
-		// 		'Authorization': "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyS2V5IjoiNDEyMzVkZmFhM2JjNDU3ZmE4MTA3ZDZhNzIwZmY2ODciLCJ1c2VyTmFtZSI6ImphbGV2ZXIiLCJ1c2VyVHlwZSI6IjAiLCJhcHBLZXkiOiJsNzczMThhOTQ0MmM0MWI4YTE2NzkwMzQ0MWQ4Zjg4NCIsImFwcE5hbWUiOiJoZWxsb1dvcmxkIiwiYXBwRGIiOiJsNzczMThhOTQ0MmM0MWI4YTE2NzkwMzQ0MWQ4Zjg4NCIsImxvZ2luVGltZSI6IjE1NTQ3MTQ0MjA5NDUiLCJleHAiOjB9.hjGHeL72B7M3-tEDq2teifQ8X_3DvYs8aJF2woPeCes"
-		// 	}
-		// });
-
-		//create Scene
-		// let data = JSON.stringify({
-		// 	modelKey: "M1554686110975"
-		// });
-		
-		// return axios.post("http://bos3d-demo.rickricks.com/api/o16f3b64e7b6425faaac86de57f73703/scenes", data, {
-		// 	headers: {
-		// 		"Content-Type": "application/json"
-		// 	}
-		// });
 
 	}
 
 	handleUploadFile(e) {
-		console.log("this.files");
-		let file = e.target.files[0];
-		console.log(file);
-		this.setState({
-			filedata: file
-		});
+		// console.log("this.files");
+		// let file = e.target.files[0];
+		// console.log(file);
+		// this.setState({
+		// 	filedata: file
+		// });
 
-		setTimeout(() => {
-			let response = this.fetchResponseData();
-			response.then(function(res) {
-				console.log(res.data.data);
-			});
-		}, 1000);
+		// setTimeout(() => {
+		// 	let response = this.fetchResponseData();
+		// 	response.then(function(res) {
+		// 		console.log(res.data.data);
+		// 	});
+		// }, 1000);
 	}
 
 	handleChange(e, type) {
-		// console.log("type");
-		// console.log(type);
-		// console.log("e.target.value");
-		// console.log(e.target.value);
 		switch(type) {
 			case "username": {
 				this.setState({
@@ -142,8 +96,6 @@ class LoginComponent extends React.Component {
 				});
 			}
 			case "checkbox": {
-				// console.log("e.target.checked");
-				// console.log(e.target.checked);
 				this.setState({
 					isChecked: e.target.checked
 				});
@@ -169,14 +121,24 @@ class LoginComponent extends React.Component {
 		BodyFormData.set("isRemember", isChecked);
 
 		API.login(BodyFormData).then(res => {
+
 			if(res.data.code === SUCCESS) {
 				message.success(res.data.message);
-				history.push("/home");
+
+				console.log("res.data");
+				console.log(res.data);
+
+				this.props.addUserInfo(res.data.data);
 			} else {
 				message.error(res.data.message);
 			}
-		});
 
+		}).then(() => {
+			console.log("this.props");
+			console.log(this.props);
+		}).then(() => {
+			history.push("/home");
+		});
 	};
 
 	render() {
@@ -240,13 +202,19 @@ class LoginComponent extends React.Component {
 					</Form.Item>
 				</Form>
 			</div>
-
 		);
 	}
 }
 
+const mapStateToProps = state => {
+	let { userInfo } = state;
+	return { userInfo };
+};	
 
-export default LoginComponent;
+export default connect(
+	mapStateToProps, 
+	{ addUserInfo }
+)(LoginComponent);
 
 
 
