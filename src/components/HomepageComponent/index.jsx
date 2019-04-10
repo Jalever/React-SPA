@@ -23,6 +23,7 @@ import FooterComponent from "./../Footer/index.jsx";
 import ImageComponent from "./../ImageComponent/index.jsx";
 import TodoContentComponent from "./../TodoContent/index.jsx";
 import TableComponent from "./../TableComponent/index.jsx";
+import BOSComponent from "./../BOSComponent/index.jsx";
 
 
 import { SIGNOUT_BUTTON } from "./../../constants/todolist.jsx";
@@ -59,12 +60,15 @@ const HomepageComponent = ({match}) => {
 	console.log(match);
 	return(
 		<React.Fragment>
-			<Layout>
+			<Layout
+				style={{ height: "100%" }}
+			>
 				<HeaderComponent match={match}/>
 				<Switch>
 					<Route exact path="/home" component={TableComponent}/>
-					<Route path="/home/images" component={ImageComponent}/>
-					<Route path="/home/todolist" component={TodoContentComponent}/>
+					<Route exact path="/home/images" component={ImageComponent}/>
+					<Route exact path="/home/todolist" component={TodoContentComponent}/>
+					<Route path="/home/bos" component={BOSComponent}/>
 				</Switch>
 				<FooterComponent />
 			</Layout>

@@ -1,0 +1,51 @@
+.content {
+	width: 85vw;
+	display: flex;
+	margin: 1rem auto;
+	padding: 1rem;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	justify-content: "space-between";
+}
+
+.doc_management {
+	width: 100%;
+	margin: 0.5rem;
+	background-color: #00ffff;
+}
+
+.doc_management_tree {
+	width: 20%;
+	float: left;
+	background-color: #e7eaf6;
+}
+
+.doc_management_main {
+	width: 77%;
+	float: left;
+	margin-left: 0.3rem;
+	border: 1px solid #ccc;
+	padding: 1rem;
+	
+	.input_border {
+		border: none;
+		outline: none;
+		width: 99%;
+		border-radius: 0;
+	    border-bottom: 1px solid #ccc !important;
+	    box-shadow: none;
+		&:focus {
+			outline:none;
+		}
+	}
+}
+
+
+
+.cursorDefault {
+	cursor: default;
+}
+
+.cursorPointer {
+	cursor: pointer;
+}

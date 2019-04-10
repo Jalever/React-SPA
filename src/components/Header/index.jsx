@@ -79,6 +79,15 @@ const HeaderComponent = ({ match }) => {
 					>
 						<Link to="/home/todolist">Todo List</Link>
 					</Menu.Item>
+
+					{
+
+						<Menu.Item
+							key="4"
+						>
+							<Link to="/home/bos">BOS</Link>
+						</Menu.Item>
+					}
 				</Menu>
 			}
 		</Header>
