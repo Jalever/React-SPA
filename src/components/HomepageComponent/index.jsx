@@ -1,12 +1,20 @@
 import React from "react";
 
 import {
+	Menu,
+	Button,
+	Icon,
 	Layout
 } from "antd";
 import "antd/dist/antd.css";
 
+const {
+	Header
+} = Layout;
+
 import {
 	Route,
+	Link,
 	Switch
 } from "react-router-dom";
 
@@ -16,23 +24,52 @@ import ImageComponent from "./../ImageComponent/index.jsx";
 import TodoContentComponent from "./../TodoContent/index.jsx";
 import TableComponent from "./../TableComponent/index.jsx";
 
-class HomepageComponent extends React.Component {
-	render() {
-		return(
-			<React.Fragment>
-				<Layout>
-					<HeaderComponent />
-					<Switch>
-						<Route path="/" component={TableComponent}/>
-						<Route path="/images" component={ImageComponent}/>
-						<Route path="/todolist" component={TodoContentComponent}/>
-					</Switch>
-					<FooterComponent />
-				</Layout>
-			</React.Fragment>
 
-		);
-	}
-}
+import { SIGNOUT_BUTTON } from "./../../constants/todolist.jsx";
+
+// class HomepageComponent extends React.Component {
+// 	componentDidMount() {
+// 		console.log("this.props");
+// 		console.log(this.props);
+// 	}
+
+// 	render() {
+// 		return(
+// 			<React.Fragment>
+// 				<Layout>
+// 					<HeaderComponent />
+// 					<Switch>
+// 						<Route exact path={this.props.match.path} component={TableComponent}/>
+// 						<Route path={`${this.props.match.path}/images`} component={ImageComponent}/>
+// 						<Route path={`${this.props.match.path}/todolist`} component={TodoContentComponent}/>
+// 					</Switch>
+// 					<FooterComponent />
+// 				</Layout>
+// 			</React.Fragment>
+
+// 		);
+// 	}
+// }
+
+
+
+const HomepageComponent = ({match}) => {
+
+	console.log("match");
+	console.log(match);
+	return(
+		<React.Fragment>
+			<Layout>
+				<HeaderComponent match={match}/>
+				<Switch>
+					<Route exact path={`${match.path}`} component={TableComponent}/>
+					<Route path={`${match.path}/images`} component={ImageComponent}/>
+					<Route path={`${match.path}/todolist`} component={TodoContentComponent}/>
+				</Switch>
+				<FooterComponent />
+			</Layout>
+		</React.Fragment>
+	);
+};
 
 export default HomepageComponent;

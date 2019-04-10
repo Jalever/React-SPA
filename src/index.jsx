@@ -25,7 +25,7 @@ class App extends React.Component {
 		return(
 			<React.Fragment>
 				<Switch>
-					<Route exact path="/" component={HomepageComponent}/>
+					<Route path="/home" component={HomepageComponent}/>
 					<Route path="/login" component={LoginComponent}/>
 				</Switch>
 			</React.Fragment>

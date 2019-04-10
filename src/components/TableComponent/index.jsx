@@ -18,8 +18,6 @@ class TableComponent extends React.Component {
 	componentDidMount() {
 		let responsePromise = this.handleResponseData();
 		responsePromise.then((res) => {
-			console.log("res");
-			console.log(res);
 
 			this.setState({
 				data: res

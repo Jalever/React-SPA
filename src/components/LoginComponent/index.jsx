@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import {
 	Input, 
 	Button,
@@ -48,8 +49,6 @@ class LoginComponent extends React.Component {
 			password: "",
 			isChecked: false
 		};
-
-		// this.uploadRef = React.createRef();
 
 		this.fetchResponseData = this.fetchResponseData.bind(this);
 		this.handleUploadFile = this.handleUploadFile.bind(this);
@@ -108,7 +107,6 @@ class LoginComponent extends React.Component {
 		// 	}
 		// });
 
-
 	}
 
 	handleUploadFile(e) {
@@ -157,6 +155,8 @@ class LoginComponent extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
+
+		let { history } = this.props;
 		
 		let username = this.state.username,
 			password = this.state.password,
@@ -171,6 +171,7 @@ class LoginComponent extends React.Component {
 		API.login(BodyFormData).then(res => {
 			if(res.data.code === SUCCESS) {
 				message.success(res.data.message);
+				history.push("/home");
 			} else {
 				message.error(res.data.message);
 			}
