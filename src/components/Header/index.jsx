@@ -92,7 +92,7 @@ const HeaderComponent = ({ match }) => {
 						type="primary"
 						style={{ borderRadius: "0" }}
 					>
-						<Link to="/login">
+						<Link to="/">
 							{ SIGNOUT_BUTTON }<Icon type="right" />
 						</Link>
 					</Button>
