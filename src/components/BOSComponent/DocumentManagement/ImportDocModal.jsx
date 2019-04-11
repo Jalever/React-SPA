@@ -45,7 +45,10 @@ import {
 
 const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSource, count }) => {
 	
+	//是否解析模型
 	let [isParserModel, setIsParserModel] = useState(false);
+	
+	//是否优先解析
 	let [isPriorityParser, setIsPriorityParser] = useState(false);
 	let [handleCheckedVal, setHandleCheckedVal] = useState("ifc");
 
