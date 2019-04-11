@@ -4,3 +4,4 @@ export const SET_FILTER = "SET_FILTER";
 
 export const ADD_USER_INFO = "ADD_USER_INFO";
 export const COMPARE_HEIGHT = "COMPARE_HEIGHT";
+export const HANDLE_SELECTED_FILES = "HANDLE_SELECTED_FILES";

@@ -3,6 +3,7 @@ import {
 	TOGGLE_TODO,
 	ADD_USER_INFO,
 	COMPARE_HEIGHT,
+	HANDLE_SELECTED_FILES,
 	SET_FILTER
 } from "./actionTypes.jsx";
 
@@ -43,5 +44,14 @@ export const compareHeight = (cHeight, sHeight) => ({
 	payload: {
 		cHeight,
 		sHeight
+	}
+});
+
+//BOS导入文档中上传文件的数据list
+export const handleSelectedFiles = (dataSource, filesCount) => ({
+	type: HANDLE_SELECTED_FILES,
+	payload: {
+		dataSource,
+		filesCount
 	}
 });

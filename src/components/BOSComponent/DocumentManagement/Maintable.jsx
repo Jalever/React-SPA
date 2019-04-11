@@ -43,6 +43,46 @@ const MainDocManagementTable = () => {
 		class_: 32,
 		disc: 32,
 		func: 32
+	},{
+		key: 2,
+		name: "John Brown",
+		code: 2,
+		version: "New York No.1 Lake Park",
+		class_: 32,
+		disc: 32,
+		func: 32
+	},{
+		key: 3,
+		name: "John Brown",
+		code: 3,
+		version: "New York No.1 Lake Park",
+		class_: 32,
+		disc: 32,
+		func: 32
+	},{
+		key: 4,
+		name: "John Brown",
+		code: 4,
+		version: "New York No.1 Lake Park",
+		class_: 32,
+		disc: 32,
+		func: 32
+	},{
+		key: 5,
+		name: "John Brown",
+		code: 5,
+		version: "New York No.1 Lake Park",
+		class_: 32,
+		disc: 32,
+		func: 32
+	},{
+		key: 6,
+		name: "John Brown",
+		code: 6,
+		version: "New York No.1 Lake Park",
+		class_: 32,
+		disc: 32,
+		func: 32
 	}];
 
 	const rowSelection = {
@@ -57,6 +97,7 @@ const MainDocManagementTable = () => {
 			rowSelection={rowSelection}
 			columns={tableHead} 
 			dataSource={data} 
+			pagination={{ pageSize: 3 }}
 		/>
 	);
 };

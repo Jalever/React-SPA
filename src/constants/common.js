@@ -34,3 +34,7 @@ export const TABLE_FILE_TYPE = "文件类型";
 export const TABLE_FILE_CODE = "编码";
 
 export const CLICK_TO_UPLOAD = "Click to Upload";
+
+
+
+export const IS_PARSER_MODEL = "是";
