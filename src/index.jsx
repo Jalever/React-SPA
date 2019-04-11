@@ -21,6 +21,10 @@ import LoginComponent from "./components/LoginComponent/index.jsx";
 import "./styles/style.scss";
 
 class App extends React.Component {
+
+	componentDidMount() {
+	}
+
 	render() {
 		return(
 			<React.Fragment>

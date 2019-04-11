@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+
+import { compareHeight } from "./../../actions/index.jsx";
 
 import {
 	Menu,
@@ -25,55 +28,76 @@ import TodoContentComponent from "./../TodoContent/index.jsx";
 import TableComponent from "./../TableComponent/index.jsx";
 import BOSComponent from "./../BOSComponent/index.jsx";
 
-
 import { SIGNOUT_BUTTON } from "./../../constants/todolist.jsx";
 
-// class HomepageComponent extends React.Component {
-// 	componentDidMount() {
-// 		console.log("this.props");
-// 		console.log(this.props);
-// 	}
+import "./style.scss";
 
-// 	render() {
-// 		return(
-// 			<React.Fragment>
-// 				<Layout>
-// 					<HeaderComponent />
-// 					<Switch>
-// 						<Route exact path={this.props.match.path} component={TableComponent}/>
-// 						<Route path={`${this.props.match.path}/images`} component={ImageComponent}/>
-// 						<Route path={`${this.props.match.path}/todolist`} component={TodoContentComponent}/>
-// 					</Switch>
-// 					<FooterComponent />
-// 				</Layout>
-// 			</React.Fragment>
+const HomepageComponent = ({ clientHeight, scrollHeight }) => {
+	
+	// let cHeight = document.documentElement.clientHeight;
+	// let sHeight = document.body.scrollHeight;
+	// console.log("clientHeight: " + clientHeight);
+	// console.log("scrollHeight: " + scrollHeight);
 
-// 		);
-// 	}
-// }
+	// console.log("HomepageComponent - clientHeight");
+	// console.log(cHeight);
+	// console.log("HomepageComponent - scrollHeight");
+	// console.log(sHeight);
+	// console.log("\n");
 
-
-
-const HomepageComponent = ({match}) => {
-
-	console.log("match");
-	console.log(match);
 	return(
 		<React.Fragment>
 			<Layout
-				style={{ height: "100%" }}
 			>
-				<HeaderComponent match={match}/>
-				<Switch>
-					<Route exact path="/home" component={TableComponent}/>
-					<Route exact path="/home/images" component={ImageComponent}/>
-					<Route exact path="/home/todolist" component={TodoContentComponent}/>
-					<Route path="/home/bos" component={BOSComponent}/>
-				</Switch>
-				<FooterComponent />
+				{/**
+					<HeaderComponent />
+				**/}
+				
+				{/**
+					<Switch>
+						<Route exact path="/home" component={TableComponent}/>
+						<Route exact path="/home/images" component={ImageComponent}/>
+						<Route exact path="/home/todolist" component={TodoContentComponent}/>
+						<Route path="/home/bos" component={BOSComponent}/>
+					</Switch>
+				**/}
+
+				{/**
+					<FooterComponent />
+					
+				**/}
+
 			</Layout>
+
+			<div className="homepage">
+				<div className="header">
+					<HeaderComponent />
+				</div>
+
+				<div className="content">
+					<Switch>
+						<Route exact path="/home" component={TableComponent}/>
+						<Route exact path="/home/images" component={ImageComponent}/>
+						<Route exact path="/home/todolist" component={TodoContentComponent}/>
+						<Route path="/home/bos" component={BOSComponent}/>
+					</Switch>
+				</div>
+
+				<div className="footer">
+					React Single Page Application
+				</div>
+			</div>
 		</React.Fragment>
 	);
 };
 
-export default HomepageComponent;
+const mapStateToProps = state => {
+	let { clientHeight, scrollHeight } = state.compareHeight;
+	// return {
+	// 	clientHeight,
+	// 	scrollHeight
+	// };
+	return { clientHeight, scrollHeight };
+};
+
+export default connect(mapStateToProps, { compareHeight })(HomepageComponent);

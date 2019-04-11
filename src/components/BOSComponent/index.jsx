@@ -15,13 +15,13 @@ import {
 	MANAGEMENT_SPACE_TREE
 } from "./../../constants/common.js";
 
-// const style = require("./style.scss");
 import "./style.scss";
 
 const BOSComponent = () => {
 	return(
 		<div
 			className="content"
+			style={{ backgroundColor: "#fff" }}
 		>
 			<Tabs
 				style={{ width:"100%" }}

@@ -86,7 +86,7 @@ const ImportDocModal = ({ isShowModal, setShowModal }) => {
 	return(
 		<React.Fragment>
 			<Modal
-				visible={true}
+				visible={isShowModal.showModal}
 				width="95vw"
 				onOk={ () => setShowModal(false) }
 				onCancel={ () => setShowModal(false) }

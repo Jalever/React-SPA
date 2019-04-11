@@ -2,6 +2,7 @@ import {
 	ADD_TODO,
 	TOGGLE_TODO,
 	ADD_USER_INFO,
+	COMPARE_HEIGHT,
 	SET_FILTER
 } from "./actionTypes.jsx";
 
@@ -37,3 +38,10 @@ export const addUserInfo = content => ({
 	}
 });
 
+export const compareHeight = (cHeight, sHeight) => ({
+	type: COMPARE_HEIGHT,
+	payload: {
+		cHeight,
+		sHeight
+	}
+});

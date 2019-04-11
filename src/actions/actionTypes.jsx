@@ -3,3 +3,4 @@ export const TOGGLE_TODO = "TOGGLE_TODO";
 export const SET_FILTER = "SET_FILTER";
 
 export const ADD_USER_INFO = "ADD_USER_INFO";
+export const COMPARE_HEIGHT = "COMPARE_HEIGHT";

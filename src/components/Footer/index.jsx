@@ -9,15 +9,11 @@ const {
 	Footer
 } = Layout;
 
-
-
 class FooterComponent extends React.Component {
 	render() {
 		return(
 			<React.Fragment>
-				<Footer style={{ textAlign: "center", cursor: "default" }}>
 					React Single Page Application
-				</Footer>
 			</React.Fragment>
 		);
 	}

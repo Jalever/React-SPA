@@ -23,17 +23,19 @@ const {
 	Header
 } = Layout;
 
-const HeaderComponent = ({ match }) => {
+const HeaderComponent = () => {
 	// console.log("HeaderComponent - match: ");
 	// console.log(match);
 
 	return(
-		<Header className="header">
+		<Header 
+			className="header"
+			style={{ width: "100vw" }}
+		>
 			<div className="logo" />
 		
 
 			{
-
 				<span
 					className="floatRight"
 				>
