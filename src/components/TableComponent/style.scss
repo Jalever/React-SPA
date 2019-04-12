@@ -15,3 +15,17 @@
 		border: 1px solid #F0F8FF;
 	}
 }
+
+.tableStyle {
+	width: 85%;
+	margin: 0 auto;
+	text-align: center;
+	background-color: #fff;
+}
+
+.spining {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
