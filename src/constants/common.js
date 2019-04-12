@@ -20,6 +20,8 @@ export const BUTTON_LOAD_FOLDER = "导入文档";
 export const BUTTON_ADD_FOLDER = "新增文件夹";
 export const BUTTON_DELETE = "删除";
 export const BUTTON_DOWNLOAD = "下载";
+export const BUTTON_REGISTER = "Sign in";
+export const BUTTON_GOBACK = "Go Back";
 
 export const TABLE_NAME = "名称";
 export const TABLE_CODE = "文档编号";
@@ -35,6 +37,17 @@ export const TABLE_FILE_CODE = "编码";
 
 export const CLICK_TO_UPLOAD = "Click to Upload";
 
-
-
 export const IS_PARSER_MODEL = "是";
+
+export const TITLE_REGISTER = "注册页面";
+
+export const INPUT_USERNAME = "用户名";
+export const INPUT_PASSWORD = "密码";
+export const INPUT_PASSWORD_CONFIRM = "确认密码";
+export const INPUT_PHONE_NUM = "手机号";
+export const INPUT_VALIDATION_CODE = "短信验证码";
+export const INPUT_GET_VALIDATION_CODE = "获取验证码";
+export const INPUT_FULLNAME = "全名";
+export const INPUT_EMAIL = "邮箱";
+
+export const INPUT_MESSAGE_EMAIL = "请输入您的邮箱!";

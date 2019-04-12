@@ -37,7 +37,6 @@ class TableComponent extends React.Component {
 			});
 		} );
 
-
 		console.log("this.props.userInfo");
 		console.log(this.props.userInfo);
 	}

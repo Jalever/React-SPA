@@ -27,24 +27,13 @@ import ImageComponent from "./../ImageComponent/index.jsx";
 import TodoContentComponent from "./../TodoContent/index.jsx";
 import TableComponent from "./../TableComponent/index.jsx";
 import BOSComponent from "./../BOSComponent/index.jsx";
+import UserInfoComponent from "./../UserInfoComponent/index.jsx";
 
 import { SIGNOUT_BUTTON } from "./../../constants/todolist.jsx";
 
 import "./style.scss";
 
 const HomepageComponent = ({ clientHeight, scrollHeight }) => {
-	
-	// let cHeight = document.documentElement.clientHeight;
-	// let sHeight = document.body.scrollHeight;
-	// console.log("clientHeight: " + clientHeight);
-	// console.log("scrollHeight: " + scrollHeight);
-
-	// console.log("HomepageComponent - clientHeight");
-	// console.log(cHeight);
-	// console.log("HomepageComponent - scrollHeight");
-	// console.log(sHeight);
-	// console.log("\n");
-
 	return(
 		<React.Fragment>
 			<Layout
@@ -80,6 +69,7 @@ const HomepageComponent = ({ clientHeight, scrollHeight }) => {
 						<Route exact path="/home/images" component={ImageComponent}/>
 						<Route exact path="/home/todolist" component={TodoContentComponent}/>
 						<Route path="/home/bos" component={BOSComponent}/>
+						<Route exact path="/home/profile" component={UserInfoComponent}/>
 					</Switch>
 				</div>
 

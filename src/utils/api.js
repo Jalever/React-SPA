@@ -7,6 +7,8 @@ import {
 } from "./../constants/api.js";
 
 import { message } from "antd";
+import "antd/dist/antd.css";
+
 import qs from "qs";
 import axios from "axios";
 
@@ -52,10 +54,24 @@ const xhrRequest = (method, url, isAsync) => {
 			} 
 		};
 	});
+};
 
+const fetchRequest = (url = ``, methods = METHOD.GET, data) => {
+	return fetch(url,{
+		method: methods,
+		mode: "cors",
+		cache: "no-cache",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded "
+		},
+		body: data
+	})
+	.then(res => res.json())
+	.catch(err => message.error(err));
 };
 
 export default {
 	login: params => request(hydrateBOSAPI("/account/login"), params, METHOD.POST, true, true),
-	requestTabeData: () => xhrRequest(METHOD.GET, hydrateAliyunAPI("/data"), true)
+	requestTabeData: () => xhrRequest(METHOD.GET, hydrateAliyunAPI("/data"), true),
+	getValidationCode: data => fetchRequest(hydrateBOSAPI("/account/validateCode"), METHOD.POST, data)
 };

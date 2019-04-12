@@ -1,0 +1,20 @@
+.form {
+	width: 80%;
+	margin:0 auto;
+	padding: 2rem;
+	text-align: center;
+	background-color: #eef1f5;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.defaultInput {
+	border:none;
+	border-radius: 0;
+    box-shadow: none;
+	text-align: center;
+	border: none;
+	outline: none;
+}

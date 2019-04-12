@@ -195,7 +195,11 @@ class LoginComponent extends React.Component {
 						}
 						&nbsp;Or&nbsp;
 						{
-							<a href="/register">{ REGISTER_NOW }</a>
+							<a 
+								onClick={ () => { 
+									this.props.history.push("/register");
+								} }
+							>{ REGISTER_NOW }</a>
 						}
 					</Form.Item>
 				</Form>

@@ -1,5 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import "./style.scss";
+
+import { createBrowserHistory } from "history";
+const history = createBrowserHistory();
 
 import {
 	Link,
@@ -23,9 +27,28 @@ const {
 	Header
 } = Layout;
 
-const HeaderComponent = () => {
-	// console.log("HeaderComponent - match: ");
-	// console.log(match);
+const HeaderComponent = (state) => {
+
+	
+	console.log("history");
+	console.log(history);
+
+	const routes = [
+		{
+			pathname: "/home",
+			itemname: "Home"
+		},{
+			pathname: "/home/images",
+			itemname: "Images"
+		},{
+			pathname: "/home/todolist",
+			itemname: "Todo List"
+		},{
+			pathname: "/home/bos",
+			itemname: "BOS"
+		}
+	];
+
 
 	return(
 		<Header 
@@ -39,12 +62,16 @@ const HeaderComponent = () => {
 				<span
 					className="floatRight"
 				>
-					<Avatar
-						shape="square"
-						size={45}
-						icon="user"
-						style={{ marginRight: "2rem",cursor: "pointer" }}
-					/>
+					<Link
+						to="/home/profile"
+					>
+						<Avatar
+							shape="square"
+							size={45}
+							icon="user"
+							style={{ marginRight: "2rem",cursor: "pointer" }}
+						/>
+					</Link>
 
 					<Button
 						type="primary"
@@ -61,34 +88,17 @@ const HeaderComponent = () => {
 				<Menu
 					theme="dark"
 					mode="horizontal"
-					defaultSelectedKeys={["1"]}
 					style={{ lineHeight: "64px" }}
 				>
-					<Menu.Item
-						key="1"
-					>
-						<Link to="/home">Table</Link>
-					</Menu.Item>
-
-					<Menu.Item
-						key="2"
-					>
-						<Link to="/home/images">Images</Link>
-					</Menu.Item>
-
-					<Menu.Item
-						key="3"
-					>
-						<Link to="/home/todolist">Todo List</Link>
-					</Menu.Item>
-
+					{/* 遍历出路由路径或名称 */}
 					{
-
-						<Menu.Item
-							key="4"
-						>
-							<Link to="/home/bos">BOS</Link>
-						</Menu.Item>
+						routes.map((curVar, index) => {
+							return <Menu.Item
+								key={ curVar.pathname }
+							>
+								<Link to={curVar.pathname}> { curVar.itemname } </Link>
+							</Menu.Item>;
+						})
 					}
 				</Menu>
 			}
@@ -96,4 +106,8 @@ const HeaderComponent = () => {
 	);
 };
 
-export default HeaderComponent;
+const mapStateToProps = state => {
+	return state;
+}
+
+export default connect(mapStateToProps)(HeaderComponent);
