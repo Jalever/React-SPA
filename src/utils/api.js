@@ -56,13 +56,13 @@ const xhrRequest = (method, url, isAsync) => {
 	});
 };
 
-const fetchRequest = (url = ``, methods = METHOD.GET, data) => {
+const fetchRequest = (url = ``, methods = METHOD.GET, data = {}) => {
 	return fetch(url,{
 		method: methods,
 		mode: "cors",
 		cache: "no-cache",
 		headers: {
-			"Content-Type": "application/x-www-form-urlencoded "
+			"Content-Type": "application/json"
 		},
 		body: data
 	})
@@ -73,5 +73,6 @@ const fetchRequest = (url = ``, methods = METHOD.GET, data) => {
 export default {
 	login: params => request(hydrateBOSAPI("/account/login"), params, METHOD.POST, true, true),
 	requestTabeData: () => xhrRequest(METHOD.GET, hydrateAliyunAPI("/data"), true),
-	getValidationCode: data => fetchRequest(hydrateBOSAPI("/account/validateCode"), METHOD.POST, data)
+	getValidationCode: data => fetchRequest(hydrateBOSAPI("/account/validateCode"), METHOD.POST, data),
+	getRandomUser: data => fetchRequest("https://randomuser.me/api/?results=10", METHOD.GET, data)
 };

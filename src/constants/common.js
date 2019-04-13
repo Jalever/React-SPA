@@ -51,3 +51,6 @@ export const INPUT_FULLNAME = "全名";
 export const INPUT_EMAIL = "邮箱";
 
 export const INPUT_MESSAGE_EMAIL = "请输入您的邮箱!";
+
+
+export const GET_RANDOM_USER = "GET RANDOM USER";

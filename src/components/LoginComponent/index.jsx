@@ -125,7 +125,6 @@ class LoginComponent extends React.Component {
 			if(res.data.code === SUCCESS) {
 				message.success(res.data.message);
 
-
 				this.props.addUserInfo(res.data.data);
 			} else {
 				message.error(res.data.message);

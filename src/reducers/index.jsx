@@ -5,12 +5,14 @@ import visibilityFilter from "./visibilityFilter.jsx";
 import userInfo from "./userInfo.jsx";
 import compareHeight from "./compareHeight.jsx";
 import handleSelectedFiles from "./handleSelectedFiles.jsx";
+import determineItem from "./determineItem.jsx";
 
 export default combineReducers({ 
 	todoItem, 
 	visibilityFilter,
 	userInfo,
 	handleSelectedFiles,
-	compareHeight
+	compareHeight,
+	determineItem
 });
 

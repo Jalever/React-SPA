@@ -29,10 +29,6 @@ const {
 
 const HeaderComponent = (state) => {
 
-	
-	console.log("history");
-	console.log(history);
-
 	const routes = [
 		{
 			pathname: "/home",

@@ -3,6 +3,7 @@ import {
 	TOGGLE_TODO,
 	ADD_USER_INFO,
 	COMPARE_HEIGHT,
+	DETERMINE_ITEM,
 	HANDLE_SELECTED_FILES,
 	SET_FILTER
 } from "./actionTypes.jsx";
@@ -53,5 +54,12 @@ export const handleSelectedFiles = (dataSource, filesCount) => ({
 	payload: {
 		dataSource,
 		filesCount
+	}
+});
+
+export const determineItem = item => ({
+	type: DETERMINE_ITEM,
+	payload: {
+		item
 	}
 });

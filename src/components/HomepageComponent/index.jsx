@@ -28,6 +28,7 @@ import TodoContentComponent from "./../TodoContent/index.jsx";
 import TableComponent from "./../TableComponent/index.jsx";
 import BOSComponent from "./../BOSComponent/index.jsx";
 import UserInfoComponent from "./../UserInfoComponent/index.jsx";
+import ProfileComponent from "./../ProfileComponent/index.jsx";
 
 import { SIGNOUT_BUTTON } from "./../../constants/todolist.jsx";
 
@@ -70,6 +71,7 @@ const HomepageComponent = ({ clientHeight, scrollHeight }) => {
 						<Route exact path="/home/todolist" component={TodoContentComponent}/>
 						<Route path="/home/bos" component={BOSComponent}/>
 						<Route exact path="/home/profile" component={UserInfoComponent}/>
+						<Route path="/home/images/:profileID" component={ProfileComponent}/>
 					</Switch>
 				</div>
 
