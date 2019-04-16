@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 
 import "./../style.scss";
 
 import {
-	Row, 
+	Row,
 	Col,
 	Button,
 	Table,
@@ -26,11 +27,16 @@ import {
 import MainDocManagementTable from "./Maintable.jsx";
 import ImportDocModal from "./ImportDocModal.jsx";
 
-const DOC = () => {
+const DOC = ({ dataSource, count }) => {
 
 	let [showModal, setShowModal] = useState(false);
 	console.log("showModal");
 	console.log(showModal);
+
+	let handleDeleteClick = () => {
+		console.log("dataSource");
+		console.log(dataSource);
+	};
 
 	return(
 		<div
@@ -73,7 +79,7 @@ const DOC = () => {
 								/>
 							}
 						</Col>
-						<Col 
+						<Col
 							span={6}
 						>
 								{" "}
@@ -100,9 +106,9 @@ const DOC = () => {
 				}
 				{
 					<Row
-						style={{ 
+						style={{
 							marginTop:"1rem",
-							marginBottom:"1rem" 
+							marginBottom:"1rem"
 						}}
 					>
 						{
@@ -128,6 +134,7 @@ const DOC = () => {
 
 								{
 									<Button
+										onClick={ () => handleDeleteClick() }
 									>
 										{BUTTON_DELETE}
 									</Button>
@@ -155,19 +162,25 @@ const DOC = () => {
 						</Col>
 					</Row>
 				}
-				
+
 			</div>
 
 			{
-				<ImportDocModal 
+				<ImportDocModal
 					isShowModal={showModal}
 					setShowModal={setShowModal}
 				/>
 			}
-				
 		</div>
 	);
 };
 
+const mapStateToProps = state => {
+	let { dataSource, count } = state.handleSelectedFiles;
+	return {
+		dataSource,
+		count
+	};
+};
 
-export default DOC;
+export default connect(mapStateToProps)(DOC);

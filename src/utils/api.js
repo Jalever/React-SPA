@@ -62,7 +62,8 @@ const fetchRequest = (url = ``, methods = METHOD.GET, data = {}) => {
 		mode: "cors",
 		cache: "no-cache",
 		headers: {
-			"Content-Type": "application/json"
+			// "Content-Type": "application/json"
+			"Content-Type": "multipart/form-data"
 		},
 		body: data
 	})
@@ -70,9 +71,23 @@ const fetchRequest = (url = ``, methods = METHOD.GET, data = {}) => {
 	.catch(err => message.error(err));
 };
 
+const fetchRequestFile = (url = ``, methods = METHOD.POST, data, jsonType = false, authorization = false) => {
+	return fetch(url, {
+		method: methods,
+		headers: {
+			"Authorization": authorization
+		},
+		body: data
+	})
+	.then(res => res.json())
+	.catch( err => message.error(err) );
+};
+
 export default {
 	login: params => request(hydrateBOSAPI("/account/login"), params, METHOD.POST, true, true),
 	requestTabeData: () => xhrRequest(METHOD.GET, hydrateAliyunAPI("/data"), true),
 	getValidationCode: data => fetchRequest(hydrateBOSAPI("/account/validateCode"), METHOD.POST, data),
-	getRandomUser: data => fetchRequest("https://randomuser.me/api/?results=10", METHOD.GET, data)
+	getRandomUser: data => fetchRequest("https://randomuser.me/api/?results=10", METHOD.GET, data),
+	postFetchFile: data => fetchRequest(hydrateAliyunAPI("/upload"), METHOD.POST, data),
+	postFile: (appKey, data, autho) => fetchRequestFile(`http://bosapi-demo.rickricks.com/bosdocumentservice/${appKey}/files`, METHOD.POST, data, false, autho)
 };

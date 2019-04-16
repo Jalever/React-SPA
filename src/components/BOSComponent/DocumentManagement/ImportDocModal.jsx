@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
+import axios from "axios";
+import API from "./../../../utils/api.js";
+
 import {
 	handleSelectedFiles
 } from "./../../../actions/index.jsx";
+
+import Cookies from "js-cookie";
 
 import {
 	Modal,
@@ -39,20 +44,52 @@ import {
 	TABLE_PARSER_MODEL,
 	TABLE_PROGRESS,
 	TABLE_FILE_CODE,
+	BUTTON_DELETE,
+	APP_KEY,
+	SUCCESS,
+	UPLOAD_FILE,
+	BAD_PARAMETER,
+	UNKNOWN_ERROR,
+	BAD_FILE_TYPE,
 	MANAGEMENT_DOC_CLASS
 } from "./../../../constants/common.js";
 
 
 const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSource, count }) => {
-	
+
 	//是否解析模型
 	let [isParserModel, setIsParserModel] = useState(false);
-	
+
 	//是否优先解析
 	let [isPriorityParser, setIsPriorityParser] = useState(false);
 	let [handleCheckedVal, setHandleCheckedVal] = useState("ifc");
 
+	let [progress, setProgress] = useState(0);
+
 	let supportedFileTyped = ["ifc","imodel","revit","obj"];
+
+	//上传文件中的“删除”功能
+	let handleDeleteItem = index => {
+		console.log("index");
+		console.log(index);
+		console.log("dataSource");
+		console.log(dataSource);
+		console.log("count");
+		console.log(count);
+
+		let data = [];
+		for(let i = 0; i < dataSource.length; i++) {
+			if(index !== i) {
+				data.push(dataSource[i]);
+			}
+		}
+
+		handleSelectedFiles(data, count);
+
+
+		console.log("after");
+		console.log(data);
+	};
 
 	let tableHead = [{
 		title: TABLE_NAME,
@@ -61,7 +98,7 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 		width: "15%",
 		className: "cursorDefault",
 		render: (val, file, index) => {
-			return <Input 
+			return <Input
 						className="regulateInputBorder"
 						value={val}
 					/>;
@@ -70,10 +107,10 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 		title: TABLE_FILE_CODE,
 		align: "center",
 		dataIndex: "code",
-		width: "10%",
+		width: "6%",
 		className: "cursorDefault",
 		render: (val, file, index) => {
-			return <Input 
+			return <Input
 						className="regulateInputBorder"
 						value={val}
 					/>;
@@ -85,7 +122,7 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 		width: "8%",
 		className: "cursorDefault",
 		render: (val, file, index) => {
-			return <Input 
+			return <Input
 						className="regulateInputBorder"
 						value={val}
 					/>;
@@ -98,7 +135,7 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 		width: "12%",
 		className: "cursorPointer",
 		render: (val, file, index) => {
-			return <Input 
+			return <Input
 						className="regulateInputBorder"
 						value={val}
 					/>;
@@ -109,7 +146,7 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 		dataIndex: "disc",
 		className: "cursorDefault",
 		render: (val, file, index) => {
-			return <Input 
+			return <Input
 						className="regulateInputBorder"
 						value={val}
 					/>;
@@ -165,7 +202,7 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 						checked={isPriorityParser}
 						onChange={ () => {
 							let isTrue = !isPriorityParser;
-							console.log("isTrue: " + isTrue);
+							// console.log("isTrue: " + isTrue);
 							setIsPriorityParser(isTrue)
 						} }
 					>
@@ -178,20 +215,38 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 		dataIndex: "progress",
 		className: "cursorDefault",
 		render: (val, file, index) => {
-			return <Progress 
+			return <Progress
 						type="circle"
-						width="40px"
+						width={40}
+						percent={progress}
 					/>
+		}
+	},{
+		title: "",
+		align: "center",
+		dataIndex: "delete",
+		className: "cursorDefault",
+		render: (val, file, index) => {
+			return <Button
+				style={{ border: "none",color: "#ff0000" }}
+				onClick={ () => handleDeleteItem(index) }
+				disabled={progress === 100 ? true : false}
+			>{ BUTTON_DELETE }</Button>;
 		}
 	}];
 
+	//监控被选中上传文件的事件
 	let handleSeletedFile = e => {
-		console.log("\n");
 		console.log("e.file");
 		console.log(e.file);
 		console.log("e");
 		console.log(e);
 		console.log("\n");
+		console.log("\n");
+
+		let userInfoParse = JSON.parse(Cookies.get("userInfo"));
+		console.log("JSON.parse Cookies");
+		console.log(userInfoParse);
 
 		let selectedFile = e.file;
 		let fileList = e.fileList;
@@ -216,15 +271,14 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 			if(isSameFile) {
 				message.warning(`您先前已经选择了<${selectedFile.name}>哦！`);
 				break;
-			} 
+			}
 		}
-
 
 		if(!isSameFile) {
 			let postFiledata = {
 				file: selectedFile,
 				name: selectedFile.name,
-				uid : 'uploadFile-' + new Date().getTime() +'-'+ count,	
+				uid : 'uploadFile-' + new Date().getTime() +'-'+ count,
 				version: 0,
 				code:'',
 				disc:'',
@@ -238,12 +292,113 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 			count += 1;
 		}
 
-
+		//传新添加的文件信息给store
 		handleSelectedFiles(dataSource, count);
 	};
 
+	//override Modal默认的actions
 	let customRequestFn = () => {
 		//override default request
+	};
+
+	//点击`上传文件`按钮事件
+	let handleUpload = () => {
+
+		console.log("dataSource - handleUpload");
+		console.log(dataSource);
+
+		//如果上传列表为空，则不执行Axios
+		if(dataSource !== []) {
+					let gpriority = dataSource[0].priority ? 1 : 0;
+
+					let userInfo = JSON.parse(Cookies.get("userInfo")),
+							gmodelDB = userInfo.modelDb[0];
+
+						// console.log("gpriority");
+						// console.log(gpriority);
+						// console.log("gmodelDB");
+						// console.log(gmodelDB);
+						// console.log("dataSource[0].docClass");
+						// console.log(dataSource[0].docClass);
+						// console.log("dataSource[0].file.originFileObj");
+						// console.log(dataSource[0].file.originFileObj);
+						// console.log("userInfo.access_token");
+						// console.log(userInfo.access_token);
+
+
+					//创建上传文件的格式
+					let formData = new FormData();
+					formData.set("gmodelType", dataSource[0].docClass);
+					formData.set("gpriority", gpriority);
+					formData.set("gmodelDB", gmodelDB);
+					formData.set("file", dataSource[0].file.originFileObj);
+
+					//可行方法一： fetch上传，因为获取不到上传进度，姑且放弃
+					// let resData = API.postFile(APP_KEY, formData, userInfo.access_token);
+					// resData.then(res => {
+					// 	console.log("post file response: ");
+					// 	console.log(res);
+					// });
+
+					//可行方法二：
+					axios.post("http://bosapi-demo.rickricks.com/bosdocumentservice/l77318a9442c41b8a167903441d8f884/files", formData, {
+						headers: {
+							'Authorization': userInfo.access_token
+						},
+						onUploadProgress: function(progressEvent) {
+							let percent = Math.round(progressEvent.loaded * 100 / progressEvent.total);
+
+							(function(per) {
+							console.log("per");
+							console.log(per);
+								setProgress(per);
+							})(percent);
+						}
+					}).then(res => {
+
+						console.log("res - axios: ");
+						console.log(res);
+
+						console.log("dataSource");
+						console.log(dataSource);
+
+						switch(res.data.code) {
+							case BAD_PARAMETER: {
+								return message.error(BAD_FILE_TYPE);
+							}
+
+							case SUCCESS: {
+
+								//清除上传文件列表
+								handleSelectedFiles([], count);
+
+								return message.success(SUCCESS);
+							}
+
+							default:
+								return message.error(UNKNOWN_ERROR);
+						}
+					}).then(() => {
+						console.log("dataSource - after upload file");
+						console.log(dataSource);
+
+						//上传文件之后，关闭Modal
+						setShowModal(false);
+						setProgress(0);
+					}).catch( err => {
+						//出错之后，百分比清零，如access_token过期之后，发送不了AJAX，Fetch，Axios
+						setProgress(0);
+
+						message.error(err.message);
+						console.log("err");
+						console.log(err);
+
+						let userInfoParse = JSON.parse(Cookies.get("userInfo"));
+						console.log("userInfoParse");
+						console.log(userInfoParse);
+					});
+		}
+
 	};
 
 
@@ -255,7 +410,8 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 			<Modal
 				visible={isShowModal.showModal}
 				width="95vw"
-				onOk={ () => setShowModal(false) }
+				onOk={ () => handleUpload() }
+				okText={ UPLOAD_FILE }
 				onCancel={ () => setShowModal(false) }
 			>
 				<Row
@@ -269,7 +425,6 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 								showUploadList={false}
 								customRequest={ () => customRequestFn() }
 								onChange={ e => handleSeletedFile(e) }
-							
 							>
 								<Button
 									style={{ margin: "2px" }}
@@ -284,14 +439,14 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 					{
 						<Col
 							span={24}
-							style={{ 
+							style={{
 								marginTop: "0.3rem",
 								borderRadius: 0
 							}}
 						>
-							<Table 
-								columns={tableHead} 
-								dataSource={dataSource} 
+							<Table
+								columns={tableHead}
+								dataSource={dataSource}
 								bordered
 								rowKey={ record => record.uid }
 								pagination={{ pageSize: 3 }}
@@ -315,5 +470,3 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps,
 	{ handleSelectedFiles }
 )(ImportDocModal);
-
-

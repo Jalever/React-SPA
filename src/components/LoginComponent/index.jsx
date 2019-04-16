@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 
 import { addUserInfo } from "./../../actions/index.jsx";
 
+import Cookies from "js-cookie";
+
 import {
 	Input, 
 	Button,
@@ -61,6 +63,7 @@ class LoginComponent extends React.Component {
 	}
 
 	componentDidMount() {
+
 	}
 
 	fetchResponseData() {
@@ -108,6 +111,8 @@ class LoginComponent extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 
+		// let [cookies, setCookies] = useCookies(["userInfo"]);
+
 		let { history } = this.props;
 		
 		let username = this.state.username,
@@ -126,6 +131,9 @@ class LoginComponent extends React.Component {
 				message.success(res.data.message);
 
 				this.props.addUserInfo(res.data.data);
+				// setCookies("userInfo", res.data.data);
+
+				Cookies.set("userInfo", res.data.data);
 			} else {
 				message.error(res.data.message);
 			}

@@ -106,6 +106,13 @@ Project was built for learning React, Redux and React-Router.
 ```
 
 ## 项目更新日志
+#### 2019年4月14日
+- Cookies存储数据
+
+#### 2019年4月13日
+- 添加`fetch` API申请数据
+- `Images`模块更改为随机用户卡片流
+
 #### 2019年4月11日
 - 重构布局，实现头部固定，中间内容和尾部总和高度小于浏览器的高度，依旧以浏览器高度显示
 - 删除`margin`左右的值，不然`width: 100vw`的情况下会出现滚动条

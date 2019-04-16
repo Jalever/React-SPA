@@ -41,16 +41,27 @@ export const IS_PARSER_MODEL = "是";
 
 export const TITLE_REGISTER = "注册页面";
 
-export const INPUT_USERNAME = "用户名";
+export const INPUT_USERNAME = "昵称";
 export const INPUT_PASSWORD = "密码";
 export const INPUT_PASSWORD_CONFIRM = "确认密码";
 export const INPUT_PHONE_NUM = "手机号";
 export const INPUT_VALIDATION_CODE = "短信验证码";
 export const INPUT_GET_VALIDATION_CODE = "获取验证码";
-export const INPUT_FULLNAME = "全名";
+export const INPUT_FULLNAME = "用户名";
 export const INPUT_EMAIL = "邮箱";
 
 export const INPUT_MESSAGE_EMAIL = "请输入您的邮箱!";
 
 
 export const GET_RANDOM_USER = "GET RANDOM USER";
+
+export const UPLOAD_FILE = "上传文件";
+
+export const ACCOUNT_NO_EXIST = "ACCOUNT_NO_EXIST";
+export const BAD_PARAMETER = "BAD_PARAMETER";
+export const BAD_FILE_TYPE = "上传文件格式错误!";
+export const UNKNOWN_ERROR = "未知错误发生!";
+
+export const ACCESS_TOKEN = "Access Token";
+export const MODEL_DB = "Model DB";
+export const USER_EMAIL = "User Email";

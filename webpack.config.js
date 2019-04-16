@@ -27,6 +27,8 @@ module.exports = {
 	devServer: {
 		contentBase: path.join(__dirname, "dist"),
 		hot: true,
+		host: "0.0.0.0",
+		port: 8080,
 		historyApiFallback: true
 	},
 	plugins: [
@@ -46,4 +48,3 @@ module.exports = {
 		}
 	}
 };
-

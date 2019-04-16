@@ -47,19 +47,19 @@ const HeaderComponent = (state) => {
 
 
 	return(
-		<Header 
+		<Header
 			className="header"
 			style={{ width: "100vw" }}
 		>
 			<div className="logo" />
-		
+
 
 			{
 				<span
 					className="floatRight"
 				>
 					<Link
-						to="/home/profile"
+						to="/home/userInfo"
 					>
 						<Avatar
 							shape="square"

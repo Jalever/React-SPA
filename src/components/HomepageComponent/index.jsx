@@ -42,7 +42,7 @@ const HomepageComponent = ({ clientHeight, scrollHeight }) => {
 				{/**
 					<HeaderComponent />
 				**/}
-				
+
 				{/**
 					<Switch>
 						<Route exact path="/home" component={TableComponent}/>
@@ -54,7 +54,7 @@ const HomepageComponent = ({ clientHeight, scrollHeight }) => {
 
 				{/**
 					<FooterComponent />
-					
+
 				**/}
 
 			</Layout>
@@ -67,11 +67,13 @@ const HomepageComponent = ({ clientHeight, scrollHeight }) => {
 				<div className="content">
 					<Switch>
 						<Route exact path="/home" component={TableComponent}/>
+
 						<Route exact path="/home/images" component={ImageComponent}/>
+						<Route path="/home/images/:profileID" component={ProfileComponent}/>
+
 						<Route exact path="/home/todolist" component={TodoContentComponent}/>
 						<Route path="/home/bos" component={BOSComponent}/>
-						<Route exact path="/home/profile" component={UserInfoComponent}/>
-						<Route path="/home/images/:profileID" component={ProfileComponent}/>
+						<Route exact path="/home/userInfo" component={UserInfoComponent}/>
 					</Switch>
 				</div>
 
