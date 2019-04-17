@@ -3,6 +3,9 @@ import {
 	BOS_3D_PREFIX,
 	API_SUCCESS_CODE,
 	ALIYUN_PREFIX,
+	APP_KEY,
+	BOS_CENTER_SERVICE,
+	BOS_DOCUMENT_SERVICE,
 	API_ERROR_NOT_LOGIN_CODE
 } from "./../constants/api.js";
 
@@ -19,7 +22,7 @@ const METHOD = {
 	DELETE: "delete"
 };
 
-const hydrateBOSAPI = (url) => BOS_FUNDATION_PREFIX + url;
+const hydrateBOSAPI = url => BOS_FUNDATION_PREFIX + url;
 const hydrateAliyunAPI = url => ALIYUN_PREFIX + url;
 
 const request = (url, params, method = "post", jsonType = false, formType = false) => {
@@ -51,19 +54,20 @@ const xhrRequest = (method, url, isAsync) => {
 				} else {
 					reject("There were something wrong in xhrRequest!");
 				}
-			} 
+			}
 		};
 	});
 };
 
-const fetchRequest = (url = ``, methods = METHOD.GET, data = {}) => {
+const fetchRequest = (url = ``, methods = METHOD.GET, jsonType = true, authorization = "", data = {}) => {
 	return fetch(url,{
 		method: methods,
 		mode: "cors",
 		cache: "no-cache",
 		headers: {
 			// "Content-Type": "application/json"
-			"Content-Type": "multipart/form-data"
+			"Content-Type": jsonType ? "multipart/form-data" : "application/json",
+			"Authorization": authorization
 		},
 		body: data
 	})
@@ -84,10 +88,11 @@ const fetchRequestFile = (url = ``, methods = METHOD.POST, data, jsonType = fals
 };
 
 export default {
-	login: params => request(hydrateBOSAPI("/account/login"), params, METHOD.POST, true, true),
+	login: params => request(hydrateBOSAPI(`/${BOS_CENTER_SERVICE}/account/login`), params, METHOD.POST, true, true),
 	requestTabeData: () => xhrRequest(METHOD.GET, hydrateAliyunAPI("/data"), true),
-	getValidationCode: data => fetchRequest(hydrateBOSAPI("/account/validateCode"), METHOD.POST, data),
-	getRandomUser: data => fetchRequest("https://randomuser.me/api/?results=10", METHOD.GET, data),
-	postFetchFile: data => fetchRequest(hydrateAliyunAPI("/upload"), METHOD.POST, data),
+	getValidationCode: data => fetchRequest(hydrateBOSAPI(`/${BOS_CENTER_SERVICE}/account/validateCode`), METHOD.POST, true, "", data),
+	getRandomUser: data => fetchRequest("https://randomuser.me/api/?results=10", METHOD.GET, true, "", data),
+	postFetchFile: data => fetchRequest(hydrateAliyunAPI("/upload"), METHOD.POST, true, "", data),
+	fetchFoldersDocuments: (params, auth) => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders/folders&documents`), METHOD.POST, false, auth, params),
 	postFile: (appKey, data, autho) => fetchRequestFile(`http://bosapi-demo.rickricks.com/bosdocumentservice/${appKey}/files`, METHOD.POST, data, false, autho)
 };

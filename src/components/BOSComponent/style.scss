@@ -26,7 +26,7 @@
 	margin-left: 0.3rem;
 	border: 1px solid #ccc;
 	padding: 1rem;
-	
+
 	.input_border {
 		border: none;
 		outline: none;
@@ -55,4 +55,10 @@
 
 .cursorPointer {
 	cursor: pointer;
+}
+
+.mainarea {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

@@ -62,10 +62,14 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 
 	//是否优先解析
 	let [isPriorityParser, setIsPriorityParser] = useState(false);
+
+	//上传文件下拉框选择
 	let [handleCheckedVal, setHandleCheckedVal] = useState("ifc");
 
+	//进度值
 	let [progress, setProgress] = useState(0);
 
+	// 上传文件支持的类型
 	let supportedFileTyped = ["ifc","imodel","revit","obj"];
 
 	//上传文件中的“删除”功能
@@ -85,7 +89,6 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 		}
 
 		handleSelectedFiles(data, count);
-
 
 		console.log("after");
 		console.log(data);
@@ -162,6 +165,8 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 						onChange={ () => {
 							let isTrue = !isParserModel;
 							console.log("isTrue: " + isTrue);
+							console.log("dataSource");
+							console.log(dataSource);
 							setIsParserModel(isTrue)
 						} }
 					>
@@ -177,6 +182,7 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 			return <Select
 						style={{ width: "100px" }}
 						defaultValue={ file.docClass }
+						disabled={ !isParserModel }
 						onChange={ val => {
 							dataSource[index].docClass = val;
 							console.log("dataSource: ");
@@ -200,6 +206,7 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 		render: (val, file, index) => {
 			return <Checkbox
 						checked={isPriorityParser}
+						disabled={ !isParserModel }
 						onChange={ () => {
 							let isTrue = !isPriorityParser;
 							// console.log("isTrue: " + isTrue);
@@ -436,6 +443,7 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 						</Col>
 					}
 
+					{/* 上传文件的表格 */}
 					{
 						<Col
 							span={24}

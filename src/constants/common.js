@@ -4,6 +4,7 @@ export const USER_NO_EXIST = "USER_NO_EXIST";
 export const REMEMBER_CHECK_BOX = "Remember Me";
 export const FORGOT_PASSWORD = "Forgot password";
 export const APP_KEY = "l77318a9442c41b8a167903441d8f884";
+export const APP_KEY_LABEL = "App Key";
 
 export const MANAGEMENT_DOC = "文档管理";
 export const MANAGEMENT_SPACE_TREE = "空间树管理";
@@ -12,7 +13,6 @@ export const MANAGEMENT_PROGRESS = "进度管理";
 export const MANAGEMENT_DOC_FOLDER_NAME = "文档名称";
 export const MANAGEMENT_DOC_CODE = "文档编号";
 export const MANAGEMENT_DOC_CLASS = "文档类别";
-
 
 export const BUTTON_SEARCH = "查询";
 export const BUTTON_RESET = "重置";
@@ -51,7 +51,6 @@ export const INPUT_FULLNAME = "用户名";
 export const INPUT_EMAIL = "邮箱";
 
 export const INPUT_MESSAGE_EMAIL = "请输入您的邮箱!";
-
 
 export const GET_RANDOM_USER = "GET RANDOM USER";
 

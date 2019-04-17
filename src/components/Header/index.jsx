@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import "./style.scss";
 
@@ -27,7 +27,7 @@ const {
 	Header
 } = Layout;
 
-const HeaderComponent = (state) => {
+const HeaderComponent = state => {
 
 	const routes = [
 		{
@@ -44,6 +44,11 @@ const HeaderComponent = (state) => {
 			itemname: "BOS"
 		}
 	];
+
+	let [curLocation, setCurLocation] = useState("/home");
+
+	console.log("History  -- Header");
+	console.log(history);
 
 
 	return(
@@ -84,6 +89,7 @@ const HeaderComponent = (state) => {
 				<Menu
 					theme="dark"
 					mode="horizontal"
+					selectedKeys={ [`${curLocation}`]}
 					style={{ lineHeight: "64px" }}
 				>
 					{/* 遍历出路由路径或名称 */}
@@ -91,6 +97,7 @@ const HeaderComponent = (state) => {
 						routes.map((curVar, index) => {
 							return <Menu.Item
 								key={ curVar.pathname }
+								onClick={ () => setCurLocation(curVar.pathname) }
 							>
 								<Link to={curVar.pathname}> { curVar.itemname } </Link>
 							</Menu.Item>;

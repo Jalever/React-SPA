@@ -1,9 +1,13 @@
-import React from "react";
+import React,{ useEffect, useState } from "react";
 
 import {
-	Table
+	Table,
+	Icon,
+	Spin
 } from "antd";
 import "antd/dist/antd.css";
+
+import Cookies from "js-cookie";
 
 import {
 	TABLE_NAME,
@@ -14,10 +18,80 @@ import {
 	TABLE_FUNCTION
 } from "./../../../constants/common.js";
 
+import API from "./../../../utils/api.js";
+import "./../style.scss";
+
 const MainDocManagementTable = () => {
+	let resData = [];
+
+	//获取登录后存储的Cookies值
+	let userInfo = JSON.parse(Cookies.get("userInfo"));
+
+	//存储bos主表格的数据
+	let tbodyData;
+	let [mainData, setMainData] = useState(null);
+	//是否出现加载效果
+	let [showSpin, setShowSpin] = useState(true);
+
+
+	//页面加载后的actions
+	useEffect(() => {
+		let params = {
+			"entity": "both",
+			"page": "1",
+			"per_page": "10",
+			"sortby": "gtime",
+			"order": "asc"
+		};
+
+		//bos主界面申请文件夹和文档数据
+		let res = API.fetchFoldersDocuments(JSON.stringify(params), userInfo.access_token);
+		res.then(res => {
+			resData = res.data.data;
+		}).then(() => {
+			tbodyData = resData.map((curValue, index) => {
+				return curValue.parameter;
+			});
+		}).then( () => {
+			setMainData(tbodyData);
+		});
+	}, []);
+
+	//主页面中点击文件触发的事件，申请该文件下的文件和文档
+	let fetchSubFolder = key => {
+		let params = {
+			"key": key,
+			"entity": "both",
+			"page": "1",
+			"per_page": "10",
+			"sortby": "gtime",
+			"order": "asc"
+		};
+
+
+		let response = API.fetchFoldersDocuments(JSON.stringify(params), userInfo.access_token);
+		response.then(res => {
+			resData = res.data.data;
+		}).then(() => {
+			setMainData(resData);
+
+		});
+	};
+
+
+
 	const tableHead = [{
 		title: TABLE_NAME,
-		dataIndex: "name"
+		dataIndex: "name",
+		render: (curValue, curRow) => <span
+				onClick={ () => fetchSubFolder(curRow.key) }
+				style={{ cursor: "pointer",padding: "0.5rem" }}
+			>
+			<Icon type="folder" />
+			{ " " }
+			{ curValue }
+		</span>
+
 	},{
 		title: TABLE_CODE,
 		dataIndex: "code"
@@ -29,60 +103,10 @@ const MainDocManagementTable = () => {
 		dataIndex: "class_"
 	},{
 		title: TABLE_DISC,
-		dataIndex: "disc"
+		dataIndex: "description"
 	},{
 		title: TABLE_FUNCTION,
 		dataIndex: "func"
-	}];
-
-	const data = [{
-		key: 1,
-		name: "John Brown",
-		code: 32,
-		version: "New York No.1 Lake Park",
-		class_: 32,
-		disc: 32,
-		func: 32
-	},{
-		key: 2,
-		name: "John Brown",
-		code: 2,
-		version: "New York No.1 Lake Park",
-		class_: 32,
-		disc: 32,
-		func: 32
-	},{
-		key: 3,
-		name: "John Brown",
-		code: 3,
-		version: "New York No.1 Lake Park",
-		class_: 32,
-		disc: 32,
-		func: 32
-	},{
-		key: 4,
-		name: "John Brown",
-		code: 4,
-		version: "New York No.1 Lake Park",
-		class_: 32,
-		disc: 32,
-		func: 32
-	},{
-		key: 5,
-		name: "John Brown",
-		code: 5,
-		version: "New York No.1 Lake Park",
-		class_: 32,
-		disc: 32,
-		func: 32
-	},{
-		key: 6,
-		name: "John Brown",
-		code: 6,
-		version: "New York No.1 Lake Park",
-		class_: 32,
-		disc: 32,
-		func: 32
 	}];
 
 	const rowSelection = {
@@ -91,14 +115,30 @@ const MainDocManagementTable = () => {
 		}
 	};
 
-
 	return(
-		<Table 
-			rowSelection={rowSelection}
-			columns={tableHead} 
-			dataSource={data} 
-			pagination={{ pageSize: 3 }}
-		/>
+		<div
+			className="mainarea"
+		>
+			{
+				(mainData === null) && <Spin
+					tip="Loading..."
+					style={{ width: "5rem" }}
+				/>
+			}
+
+			{/* 主页面主表格 */}
+			{
+				(mainData !== null) && <Table
+					style={{
+						width: "100%"
+					}}
+					rowSelection={rowSelection}
+					columns={ tableHead }
+					dataSource={ mainData }
+					pagination={{ pageSize: 10 }}
+				/>
+			}
+		</div>
 	);
 };
 
