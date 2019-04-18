@@ -1,4 +1,5 @@
 import React,{ useEffect, useState } from "react";
+import { connect } from "react-redux";
 
 import {
 	Table,
@@ -21,7 +22,7 @@ import {
 import API from "./../../../utils/api.js";
 import "./../style.scss";
 
-const MainDocManagementTable = () => {
+const MainDocManagementTable = ({ directoryTreeReducers }) => {
 	let resData = [];
 
 	//获取登录后存储的Cookies值
@@ -29,33 +30,23 @@ const MainDocManagementTable = () => {
 
 	//存储bos主表格的数据
 	let tbodyData;
-	let [mainData, setMainData] = useState(null);
+	let [mainData, setMainData] = useState([]);
 	//是否出现加载效果
 	let [showSpin, setShowSpin] = useState(true);
 
+	//存储正确directoryTree格式值
+	let directoryArray = [];
 
-	//页面加载后的actions
 	useEffect(() => {
-		let params = {
-			"entity": "both",
-			"page": "1",
-			"per_page": "10",
-			"sortby": "gtime",
-			"order": "asc"
-		};
+		for(let i in directoryTreeReducers) {
+			if(!directoryArray.includes(i)) {
+				directoryArray.push(directoryTreeReducers[`${i}`]);
+			}
+		}
 
-		//bos主界面申请文件夹和文档数据
-		let res = API.fetchFoldersDocuments(JSON.stringify(params), userInfo.access_token);
-		res.then(res => {
-			resData = res.data.data;
-		}).then(() => {
-			tbodyData = resData.map((curValue, index) => {
-				return curValue.parameter;
-			});
-		}).then( () => {
-			setMainData(tbodyData);
-		});
-	}, []);
+		//将正确格式的directoryTree数据赋值于mainData变量
+		setMainData(directoryArray);
+	});
 
 	//主页面中点击文件触发的事件，申请该文件下的文件和文档
 	let fetchSubFolder = key => {
@@ -68,13 +59,11 @@ const MainDocManagementTable = () => {
 			"order": "asc"
 		};
 
-
 		let response = API.fetchFoldersDocuments(JSON.stringify(params), userInfo.access_token);
 		response.then(res => {
 			resData = res.data.data;
 		}).then(() => {
 			setMainData(resData);
-
 		});
 	};
 
@@ -120,7 +109,7 @@ const MainDocManagementTable = () => {
 			className="mainarea"
 		>
 			{
-				(mainData === null) && <Spin
+				(mainData === []) && <Spin
 					tip="Loading..."
 					style={{ width: "5rem" }}
 				/>
@@ -128,7 +117,7 @@ const MainDocManagementTable = () => {
 
 			{/* 主页面主表格 */}
 			{
-				(mainData !== null) && <Table
+				(mainData !== []) && <Table
 					style={{
 						width: "100%"
 					}}
@@ -142,5 +131,14 @@ const MainDocManagementTable = () => {
 	);
 };
 
+const mapStateToProps = state => {
+	let { directoryTreeReducers } = state;
+	return {
+		directoryTreeReducers
+	};
+};
 
-export default MainDocManagementTable;
+
+export default connect(
+	mapStateToProps
+)(MainDocManagementTable);

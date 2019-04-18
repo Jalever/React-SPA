@@ -12,6 +12,14 @@ import {
 import { message } from "antd";
 import "antd/dist/antd.css";
 
+import {
+	UNAUTHORIZED,
+	UNKNOWN_ERROR
+} from "./../constants/common.js";
+
+import { createBrowserHistory } from "history";
+const history = createBrowserHistory();
+
 import qs from "qs";
 import axios from "axios";
 
@@ -65,13 +73,23 @@ const fetchRequest = (url = ``, methods = METHOD.GET, jsonType = true, authoriza
 		mode: "cors",
 		cache: "no-cache",
 		headers: {
-			// "Content-Type": "application/json"
 			"Content-Type": jsonType ? "multipart/form-data" : "application/json",
 			"Authorization": authorization
 		},
 		body: data
 	})
-	.then(res => res.json())
+	.then(res => {
+		switch (res.status) {
+			case 200: {
+				return res.json();
+			}
+			case 401: {
+				return message.error(UNAUTHORIZED);
+			}
+			default:
+				return message.error(UNKNOWN_ERROR);
+		}
+	})
 	.catch(err => message.error(err));
 };
 
@@ -90,7 +108,8 @@ const fetchRequestFile = (url = ``, methods = METHOD.POST, data, jsonType = fals
 export default {
 	login: params => request(hydrateBOSAPI(`/${BOS_CENTER_SERVICE}/account/login`), params, METHOD.POST, true, true),
 	requestTabeData: () => xhrRequest(METHOD.GET, hydrateAliyunAPI("/data"), true),
-	getValidationCode: data => fetchRequest(hydrateBOSAPI(`/${BOS_CENTER_SERVICE}/account/validateCode`), METHOD.POST, true, "", data),
+	//发送验证码
+	getValidationCode: data => fetchRequest(hydrateBOSAPI(`/${BOS_CENTER_SERVICE}/account/validateCode`), METHOD.POST, true, data),
 	getRandomUser: data => fetchRequest("https://randomuser.me/api/?results=10", METHOD.GET, true, "", data),
 	postFetchFile: data => fetchRequest(hydrateAliyunAPI("/upload"), METHOD.POST, true, "", data),
 	fetchFoldersDocuments: (params, auth) => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders/folders&documents`), METHOD.POST, false, auth, params),

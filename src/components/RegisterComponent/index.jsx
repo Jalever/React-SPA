@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 import {
 	Button,
-	Row, 
+	Row,
 	Input,
 	Form,
 	Icon,
@@ -46,6 +46,9 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 	//引入getFieldDecorator函数
 	const { getFieldDecorator } = form;
 
+	//设置发送验证码按钮是否diabled
+	let [disabledValidateButton, setDisabledValidateButton] = useState(false);
+
 	// antd自带的label和输入框样式
 	const formItemLayout = {
 		labelCol: {
@@ -56,11 +59,6 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 		}
 	};
 
-	console.log("history: ");
-	console.log(history);
-	console.log("form: ");
-	console.log(form);
-
 	const goBackToLogin = () => {
 		history.push("/");
 	};
@@ -68,37 +66,45 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 	let handleSubmit = e => {
 		e.preventDefault();
 
-		// form.validateFields(["phoneNum"], (err, values) => {
-		// 	console.log("validatePhone - phoneNum - err: ");
-		// 	console.log(err);
-		// 	console.log("validatePhone - phoneNum - values: ");
-		// 	console.log(values);
-		// });
-
 		form.validateFieldsAndScroll((err, values) => {
 			if(!err) {
 				console.log("Received values of form: ", values);
 			}
-		});	
+		});
 	};
 
 	let getValidationCode = () => {
+		//令发送验证码按钮不可点击
+		setDisabledValidateButton(true);
+
 		form.validateFields(["phoneNum"]);
 
 		let phone = form.getFieldValue("phoneNum");
 		if(/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
 			let data = {
 				validateType: "telephone",
-				receiver: phone 
+				receiver: phone
 			};
 
 			let phoneData = new FormData();
 			phoneData.set("validateType","telephone");
 			phoneData.set("receiver", phone);
 
-			let response = API.getValidationCode(phoneData);
-			console.log("response");
-			console.log(response);
+			// let response = API.getValidationCode(phoneData);
+			fetch("http://bosapi-demo.rickricks.com/boscenterservice/account/validateCode", {
+				method: "POST",
+				body: phoneData
+			}).then( res => {
+				console.log("res");
+				console.log(res);
+				if(res.status === 200 && res.ok) {
+					//令发送验证码按钮可点击
+					setDisabledValidateButton(false);
+				}
+			});
+
+			// console.log("response");
+			// console.log(response);
 		} else {
 			form.setFields({
 				["phoneNum"]: {
@@ -121,8 +127,8 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 					<Row>
 						{
 							<Col span={4}>
-								<Icon 
-									type="arrow-left" 
+								<Icon
+									type="arrow-left"
 									style={{
 										fontSize: "2rem"
 									}}
@@ -156,9 +162,9 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 									message: "Please input your userName."
 								}]
 							})(
-								<Input 
+								<Input
 									prefix={
-										<Icon 
+										<Icon
 											type="user"
 											style={{ color: "rgba(0, 0, 0, 0.25)" }}
 										/>
@@ -190,7 +196,7 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 											type="lock"
 											style={{ color: "rgba(0, 0, 0, 0.25)" }}
 										/>
-									} 
+									}
 									type="password"
 									placeholder="Password"
 									className="defaultInput"
@@ -220,7 +226,7 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 											type="lock"
 											style={{ color: "rgba(0, 0, 0, 0.25)" }}
 										/>
-									} 
+									}
 									type="password"
 									placeholder="Password"
 									className="defaultInput"
@@ -249,7 +255,7 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 											type="phone"
 											style={{ color: "rgba(0, 0, 0, 0.25)" }}
 										/>
-									} 
+									}
 									placeholder="Phone Number"
 									className="defaultInput"
 								/>
@@ -279,7 +285,7 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 													type="message"
 													style={{ color: "rgba(0, 0, 0, 0.25)" }}
 												/>
-											} 
+											}
 											placeholder="Validation Code"
 											className="defaultInput"
 										/>
@@ -289,10 +295,11 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 
 							<Col span={8}>
 								{
-									
+
 									<Button
 										type="primary"
 										onClick={getValidationCode}
+										disabled={ disabledValidateButton }
 									>
 										{ INPUT_GET_VALIDATION_CODE }
 									</Button>
@@ -323,7 +330,7 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 											type="usb"
 											style={{ color: "rgba(0, 0, 0, 0.25)" }}
 										/>
-									} 
+									}
 									placeholder="Fullname"
 									className="defaultInput"
 								/>
@@ -355,7 +362,7 @@ const RegisterComponent = ({ history, userInfo, form }) => {
 											type="mail"
 											style={{ color: "rgba(0, 0, 0, 0.25)" }}
 										/>
-									} 
+									}
 									placeholder="E-Mail"
 									className="defaultInput"
 								/>
@@ -392,4 +399,3 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(WrappedRegisterForm);
-

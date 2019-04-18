@@ -23,35 +23,26 @@ const getTodoList = item => {
 	return getTodoAllIds(item).map( curValue => {
 		return getAItemAction(item, curValue);
 	} );
-}; 
+};
 
 const getFilteringTodoList = (item, visibilityFilter) => {
 	let allTodos = getTodoList(item);
 
-	// console.log("allTodos: ");
-	// console.log(allTodos);
-	// console.log("visibilityFilter: ");
-	// console.log(visibilityFilter);
-
 	switch(visibilityFilter) {
 		case VISIBILITY_FILTER.COMPLETED: {
 			return allTodos.filter((ele, index) => {
-				console.log("visibilityFilter.COMPLETED - ele");
-				console.log(ele);
 				return ele.completed;
 			});
 		}
 
 		case VISIBILITY_FILTER.INCOMPLETED: {
 			return allTodos.filter((ele, index) => {
-				console.log("visibilityFilter.INCOMPLETED - ele");
-				console.log(ele);
 				return !ele.completed;
 			});
 		}
 
-		case VISIBILITY_FILTER.ALL: 
-		default: 
+		case VISIBILITY_FILTER.ALL:
+		default:
 			return allTodos;
 	}
 };
@@ -65,7 +56,7 @@ const TodoListComponent = ({ todoItem }) => {
 			className="customUl"
 		>
 			{
-				todoItem && todoItem.length 
+				todoItem && todoItem.length
 				? (todoItem.map( (curValue, index) => {
 					return <TodoItem key={index} todoItem={curValue} />
 				} )) : "No Todos, yay!"

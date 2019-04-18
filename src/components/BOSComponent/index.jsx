@@ -1,8 +1,10 @@
-import React from "react";
-import DOC from "./DocumentManagement/doc_management.jsx";
+import React,{ useEffect, useState } from "react";
+import { connect } from "react-redux";
+import DOC from "./DocumentManagement/DOC.jsx";
 
 import {
-	Tabs
+	Tabs,
+	Skeleton
 } from "antd";
 
 const TabPane = Tabs.TabPane;
@@ -17,7 +19,15 @@ import {
 
 import "./style.scss";
 
-const BOSComponent = () => {
+const BOSComponent = ({ directoryTreeReducers, directoryTreeState }) => {
+	//数据没返回之前，skeleton遮罩
+	let [showSkeleton, setShowSkeleton] = useState(true);
+
+	useEffect(() => {
+		console.log("directoryTreeState");
+		console.log(directoryTreeState);
+	});
+
 	return(
 		<div
 			className="content"
@@ -27,16 +37,19 @@ const BOSComponent = () => {
 				style={{ width:"100%" }}
 			>
 				{
-					<TabPane 
+					<TabPane
 						tab={ MANAGEMENT_DOC }
 						key = { MANAGEMENT_DOC }
 					>
-						<DOC />
+						{
+							<DOC />
+						}
+
 					</TabPane>
 				}
 
 				{
-					<TabPane 
+					<TabPane
 						tab={ MANAGEMENT_SPACE_TREE }
 						key = { MANAGEMENT_SPACE_TREE }
 					>
@@ -47,7 +60,7 @@ const BOSComponent = () => {
 				}
 
 				{
-					<TabPane 
+					<TabPane
 						tab={ MANAGEMENT_PROGRESS }
 						key = { MANAGEMENT_PROGRESS }
 					>
@@ -61,6 +74,14 @@ const BOSComponent = () => {
 	);
 };
 
+const mapStateToProps = state => {
+	let { directoryTreeReducers, directoryTreeState } = state;
+	return {
+		directoryTreeReducers,
+		directoryTreeState
+	};
+};
 
-export default BOSComponent;
-
+export default connect(
+	mapStateToProps
+)(BOSComponent);

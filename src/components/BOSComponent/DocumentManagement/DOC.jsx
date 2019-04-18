@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import "./../style.scss";
@@ -26,16 +26,21 @@ import {
 
 import MainDocManagementTable from "./Maintable.jsx";
 import ImportDocModal from "./ImportDocModal.jsx";
+import DirectoryTreeComponent from "./DirectoryTreeComponent.jsx";
 
-const DOC = ({ dataSource, count }) => {
+const DOC = ({ dataSource, count, directoryTreeReducers }) => {
 
 	let [showModal, setShowModal] = useState(false);
-	console.log("showModal");
-	console.log(showModal);
+
+	// useEffect(() => {
+	// 	// console.log("directoryTreeReducers");
+	// 	// console.log(directoryTreeReducers);
+	//
+	// });
 
 	let handleDeleteClick = () => {
-		console.log("dataSource");
-		console.log(dataSource);
+		console.log("directoryTreeReducers");
+		console.log(directoryTreeReducers);
 	};
 
 	return(
@@ -43,11 +48,9 @@ const DOC = ({ dataSource, count }) => {
 			className="doc_management"
 		>
 
-			<div
-				className="doc_management_tree"
-			>
-				"doc_management_tree"
-			</div>
+			{
+				<DirectoryTreeComponent />
+			}
 
 			<div
 				className="doc_management_main"
@@ -177,9 +180,11 @@ const DOC = ({ dataSource, count }) => {
 
 const mapStateToProps = state => {
 	let { dataSource, count } = state.handleSelectedFiles;
+	let { directoryTreeReducers } = state;
 	return {
 		dataSource,
-		count
+		count,
+		directoryTreeReducers
 	};
 };
 

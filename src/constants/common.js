@@ -60,6 +60,7 @@ export const ACCOUNT_NO_EXIST = "ACCOUNT_NO_EXIST";
 export const BAD_PARAMETER = "BAD_PARAMETER";
 export const BAD_FILE_TYPE = "上传文件格式错误!";
 export const UNKNOWN_ERROR = "未知错误发生!";
+export const UNAUTHORIZED = "Token已过期，请重新登录!";
 
 export const ACCESS_TOKEN = "Access Token";
 export const MODEL_DB = "Model DB";

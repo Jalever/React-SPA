@@ -16,6 +16,7 @@
 
 .doc_management_tree {
 	width: 20%;
+	min-width: 20vw;
 	float: left;
 	background-color: #e7eaf6;
 }
@@ -61,4 +62,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.dispalyDOC {
+	display: none;
 }

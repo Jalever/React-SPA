@@ -106,6 +106,10 @@ Project was built for learning React, Redux and React-Router.
 ```
 
 ## 项目更新日志
+
+#### 2019年4月18日
+- BOS模块文档管理tab加载时申请数据，但有问题，应该在加载BOS模块时申请数据，而不是在加载完BOS模块之后，在旁边的文件树申请，有时间重构一下代码
+
 #### 2019年4月14日
 - Cookies存储数据
 
@@ -126,6 +130,3 @@ Project was built for learning React, Redux and React-Router.
 - 登录后返回的数据，存储在`store`中
 - 嵌套路由刷新后浏览器显示空白，可以在`webpack.config.js`中的`output`中设置`publicPath="/"`
 - 嵌套路由跳转浏览器空白的问题，可以考虑一下`exact`的设置
-
-
-

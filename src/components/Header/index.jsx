@@ -47,8 +47,8 @@ const HeaderComponent = state => {
 
 	let [curLocation, setCurLocation] = useState("/home");
 
-	console.log("History  -- Header");
-	console.log(history);
+	// console.log("History  -- Header");
+	// console.log(history);
 
 
 	return(

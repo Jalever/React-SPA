@@ -74,12 +74,12 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 
 	//上传文件中的“删除”功能
 	let handleDeleteItem = index => {
-		console.log("index");
-		console.log(index);
-		console.log("dataSource");
-		console.log(dataSource);
-		console.log("count");
-		console.log(count);
+		// console.log("index");
+		// console.log(index);
+		// console.log("dataSource");
+		// console.log(dataSource);
+		// console.log("count");
+		// console.log(count);
 
 		let data = [];
 		for(let i = 0; i < dataSource.length; i++) {
@@ -90,8 +90,8 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 
 		handleSelectedFiles(data, count);
 
-		console.log("after");
-		console.log(data);
+		// console.log("after");
+		// console.log(data);
 	};
 
 	let tableHead = [{
@@ -164,9 +164,9 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 						checked={isParserModel}
 						onChange={ () => {
 							let isTrue = !isParserModel;
-							console.log("isTrue: " + isTrue);
-							console.log("dataSource");
-							console.log(dataSource);
+							// console.log("isTrue: " + isTrue);
+							// console.log("dataSource");
+							// console.log(dataSource);
 							setIsParserModel(isTrue)
 						} }
 					>
@@ -185,8 +185,8 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 						disabled={ !isParserModel }
 						onChange={ val => {
 							dataSource[index].docClass = val;
-							console.log("dataSource: ");
-							console.log(dataSource);
+							// console.log("dataSource: ");
+							// console.log(dataSource);
 						} }
 					>
 						{
@@ -244,16 +244,16 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 
 	//监控被选中上传文件的事件
 	let handleSeletedFile = e => {
-		console.log("e.file");
-		console.log(e.file);
-		console.log("e");
-		console.log(e);
-		console.log("\n");
-		console.log("\n");
+		// console.log("e.file");
+		// console.log(e.file);
+		// console.log("e");
+		// console.log(e);
+		// console.log("\n");
+		// console.log("\n");
 
 		let userInfoParse = JSON.parse(Cookies.get("userInfo"));
-		console.log("JSON.parse Cookies");
-		console.log(userInfoParse);
+		// console.log("JSON.parse Cookies");
+		// console.log(userInfoParse);
 
 		let selectedFile = e.file;
 		let fileList = e.fileList;
@@ -311,8 +311,8 @@ const ImportDocModal = ({ isShowModal, setShowModal, handleSelectedFiles, dataSo
 	//点击`上传文件`按钮事件
 	let handleUpload = () => {
 
-		console.log("dataSource - handleUpload");
-		console.log(dataSource);
+		// console.log("dataSource - handleUpload");
+		// console.log(dataSource);
 
 		//如果上传列表为空，则不执行Axios
 		if(dataSource !== []) {

@@ -5,6 +5,8 @@ import {
 	COMPARE_HEIGHT,
 	DETERMINE_ITEM,
 	HANDLE_SELECTED_FILES,
+	ADD_DIRECTORY_TREE,
+	HAVE_LOADED_DIRECTORY_TREE,
 	SET_FILTER
 } from "./actionTypes.jsx";
 
@@ -61,5 +63,21 @@ export const determineItem = item => ({
 	type: DETERMINE_ITEM,
 	payload: {
 		item
+	}
+});
+
+//BOS - 存储文档树数据 - 因为reducers中[]结构会有重复，所以后面选择索引object结构避免重复冲突
+export const addDirectoryTree = item => ({
+	type: ADD_DIRECTORY_TREE,
+	payload: {
+		item
+	}
+});
+
+//文档树是否获取到数据
+export const haveLoadedDirectoryTree = haveLoaded => ({
+	type: HAVE_LOADED_DIRECTORY_TREE,
+	payload: {
+		haveLoaded
 	}
 });
