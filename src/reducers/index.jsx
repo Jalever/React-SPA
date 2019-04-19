@@ -8,12 +8,14 @@ import handleSelectedFiles from "./handleSelectedFiles.jsx";
 import determineItem from "./determineItem.jsx";
 import directoryTreeReducers from "./addDirectoryTree.jsx";
 import directoryTreeState from "./directoryTreeState.jsx";
+import handleNewFolderModal from "./handleNewFolderModal.jsx";
 
 export default combineReducers({
 	todoItem,
 	visibilityFilter,
 	directoryTreeState,
 	userInfo,
+	handleNewFolderModal,
 	handleSelectedFiles,
 	compareHeight,
 	directoryTreeReducers,

@@ -65,3 +65,7 @@ export const UNAUTHORIZED = "Token已过期，请重新登录!";
 export const ACCESS_TOKEN = "Access Token";
 export const MODEL_DB = "Model DB";
 export const USER_EMAIL = "User Email";
+
+
+export const ADD_NEW_FOLDER_MODAL = "新增文件夹Modal";
+export const ADD_NEW_FOLDER_MODAL_NAME = "新增文件夹名称";

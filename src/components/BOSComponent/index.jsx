@@ -24,8 +24,8 @@ const BOSComponent = ({ directoryTreeReducers, directoryTreeState }) => {
 	let [showSkeleton, setShowSkeleton] = useState(true);
 
 	useEffect(() => {
-		console.log("directoryTreeState");
-		console.log(directoryTreeState);
+		// console.log("directoryTreeState");
+		// console.log(directoryTreeState);
 	});
 
 	return(

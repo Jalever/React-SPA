@@ -67,3 +67,14 @@
 .dispalyDOC {
 	display: none;
 }
+
+.directoryTreeTitle {
+	height: 3vh;
+	min-height: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #eaf5ff;
+	font-weight: bold;
+	cursor: pointer;
+}

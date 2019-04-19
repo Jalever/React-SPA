@@ -27,8 +27,13 @@ import {
 import MainDocManagementTable from "./Maintable.jsx";
 import ImportDocModal from "./ImportDocModal.jsx";
 import DirectoryTreeComponent from "./DirectoryTreeComponent.jsx";
+import NewFolderModal from "./NewFolderModal.jsx";
 
-const DOC = ({ dataSource, count, directoryTreeReducers }) => {
+import {
+	addNewFolderModal
+} from "./../../../actions/index.jsx";
+
+const DOC = ({ dataSource, count, directoryTreeReducers, addNewFolderModal }) => {
 
 	let [showModal, setShowModal] = useState(false);
 
@@ -39,14 +44,17 @@ const DOC = ({ dataSource, count, directoryTreeReducers }) => {
 	// });
 
 	let handleDeleteClick = () => {
-		console.log("directoryTreeReducers");
-		console.log(directoryTreeReducers);
+		// console.log("directoryTreeReducers");
+		// console.log(directoryTreeReducers);
 	};
 
 	return(
 		<div
 			className="doc_management"
 		>
+			{
+				<NewFolderModal />
+			}
 
 			{
 				<DirectoryTreeComponent />
@@ -128,6 +136,7 @@ const DOC = ({ dataSource, count, directoryTreeReducers }) => {
 
 								{
 									<Button
+										onClick={ () => addNewFolderModal(true) }
 									>
 										{BUTTON_ADD_FOLDER}
 									</Button>
@@ -188,4 +197,6 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps)(DOC);
+export default connect(mapStateToProps, {
+	addNewFolderModal
+})(DOC);

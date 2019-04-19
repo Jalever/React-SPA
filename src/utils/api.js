@@ -22,6 +22,9 @@ const history = createBrowserHistory();
 
 import qs from "qs";
 import axios from "axios";
+import Cookies from "js-cookie";
+
+const userInfo = Cookies.get("userInfo");
 
 const METHOD = {
 	GET: "get",
@@ -86,6 +89,9 @@ const fetchRequest = (url = ``, methods = METHOD.GET, jsonType = true, authoriza
 			case 401: {
 				return message.error(UNAUTHORIZED);
 			}
+			case 503: {
+				return message.error("503 Error");
+			}
 			default:
 				return message.error(UNKNOWN_ERROR);
 		}
@@ -113,5 +119,6 @@ export default {
 	getRandomUser: data => fetchRequest("https://randomuser.me/api/?results=10", METHOD.GET, true, "", data),
 	postFetchFile: data => fetchRequest(hydrateAliyunAPI("/upload"), METHOD.POST, true, "", data),
 	fetchFoldersDocuments: (params, auth) => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders/folders&documents`), METHOD.POST, false, auth, params),
+	getSubDirectoryTree: key => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders/` + key + `folders/noRelation=false`), METHOD.GET, true, userInfo.access_token),
 	postFile: (appKey, data, autho) => fetchRequestFile(`http://bosapi-demo.rickricks.com/bosdocumentservice/${appKey}/files`, METHOD.POST, data, false, autho)
 };

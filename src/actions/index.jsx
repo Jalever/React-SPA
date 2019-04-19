@@ -7,6 +7,8 @@ import {
 	HANDLE_SELECTED_FILES,
 	ADD_DIRECTORY_TREE,
 	HAVE_LOADED_DIRECTORY_TREE,
+	HANDLE_NEW_FOLDER_MODAL,
+	HANDLE_SELECTED_TREE_NODE,
 	SET_FILTER
 } from "./actionTypes.jsx";
 
@@ -79,5 +81,20 @@ export const haveLoadedDirectoryTree = haveLoaded => ({
 	type: HAVE_LOADED_DIRECTORY_TREE,
 	payload: {
 		haveLoaded
+	}
+});
+
+//新增文件夹Modal是否可见
+export const addNewFolderModal = isVisible => ({
+	type: HANDLE_NEW_FOLDER_MODAL,
+	payload: {
+		isVisible
+	}
+});
+
+export const handleSelectedTreeNode = key => ({
+	type: HANDLE_SELECTED_TREE_NODE,
+	payload: {
+		key
 	}
 });
