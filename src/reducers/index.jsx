@@ -9,9 +9,15 @@ import determineItem from "./determineItem.jsx";
 import directoryTreeReducers from "./addDirectoryTree.jsx";
 import directoryTreeState from "./directoryTreeState.jsx";
 import handleNewFolderModal from "./handleNewFolderModal.jsx";
+import documentaryTableData from "./documentaryTableData.jsx";
+import {
+	selectedDirectory
+} from "./directoryTree.jsx";
 
 export default combineReducers({
 	todoItem,
+	selectedDirectory,
+	documentaryTableData,
 	visibilityFilter,
 	directoryTreeState,
 	userInfo,

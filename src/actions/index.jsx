@@ -6,7 +6,9 @@ import {
 	DETERMINE_ITEM,
 	HANDLE_SELECTED_FILES,
 	ADD_DIRECTORY_TREE,
+	HANDLE_DOCUMENT_TABLE_DATA,
 	HAVE_LOADED_DIRECTORY_TREE,
+	HANDLE_SELECTED_DIRECTORY,
 	HANDLE_NEW_FOLDER_MODAL,
 	HANDLE_SELECTED_TREE_NODE,
 	SET_FILTER
@@ -94,6 +96,22 @@ export const addNewFolderModal = isVisible => ({
 
 export const handleSelectedTreeNode = key => ({
 	type: HANDLE_SELECTED_TREE_NODE,
+	payload: {
+		key
+	}
+});
+
+//handle文档主页面的表格数据
+export const handleDocumentTableData = data => ({
+	type: HANDLE_DOCUMENT_TABLE_DATA,
+	payload: {
+		data
+	}
+});
+
+//handle文档主页面的表格数据
+export const handleSelectedDirectory = key => ({
+	type: HANDLE_SELECTED_DIRECTORY,
 	payload: {
 		key
 	}

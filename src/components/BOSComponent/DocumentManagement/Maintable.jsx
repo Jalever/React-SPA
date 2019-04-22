@@ -22,7 +22,11 @@ import {
 import API from "./../../../utils/api.js";
 import "./../style.scss";
 
-const MainDocManagementTable = ({ directoryTreeReducers }) => {
+import {
+	handleDocumentTableData
+} from "./../../../actions/index.jsx";
+
+const MainDocManagementTable = ({ documentaryTableData, handleDocumentTableData }) => {
 	let resData = [];
 
 	//获取登录后存储的Cookies值
@@ -38,15 +42,16 @@ const MainDocManagementTable = ({ directoryTreeReducers }) => {
 	let directoryArray = [];
 
 	useEffect(() => {
-		for(let i in directoryTreeReducers) {
-			if(!directoryArray.includes(i)) {
-				directoryArray.push(directoryTreeReducers[`${i}`]);
-			}
-		}
+		fetchSubFolder(null);
+		// for(let i in documentaryTableData) {
+		// 	if(!directoryArray.includes(i)) {
+		// 		directoryArray.push(documentaryTableData[`${i}`]);
+		// 	}
+		// }
 
 		//将正确格式的directoryTree数据赋值于mainData变量
-		setMainData(directoryArray);
-	});
+		// setMainData(directoryArray);
+	}, []);
 
 	//主页面中点击文件触发的事件，申请该文件下的文件和文档
 	let fetchSubFolder = key => {
@@ -62,8 +67,18 @@ const MainDocManagementTable = ({ directoryTreeReducers }) => {
 		let response = API.fetchFoldersDocuments(JSON.stringify(params), userInfo.access_token);
 		response.then(res => {
 			resData = res.data.data;
-		}).then(() => {
-			setMainData(resData);
+
+			// handleDocumentTableData(resData);
+			let resArr = [];
+			res.data.data.map(curValue => {
+				// handleDocumentTableData(curValue.parameter);
+				resArr.push(curValue.parameter);
+			});
+
+			handleDocumentTableData(resArr);
+
+			setMainData(resArr);
+
 		});
 	};
 
@@ -73,7 +88,6 @@ const MainDocManagementTable = ({ directoryTreeReducers }) => {
 		title: TABLE_NAME,
 		dataIndex: "name",
 		render: (curValue, curRow) => <span
-				onClick={ () => fetchSubFolder(curRow.key) }
 				style={{ cursor: "pointer",padding: "0.5rem" }}
 			>
 			<Icon type="folder" />
@@ -123,7 +137,7 @@ const MainDocManagementTable = ({ directoryTreeReducers }) => {
 					}}
 					rowSelection={rowSelection}
 					columns={ tableHead }
-					dataSource={ mainData }
+					dataSource={ documentaryTableData }
 					pagination={{ pageSize: 10 }}
 				/>
 			}
@@ -132,13 +146,19 @@ const MainDocManagementTable = ({ directoryTreeReducers }) => {
 };
 
 const mapStateToProps = state => {
-	let { directoryTreeReducers } = state;
+	let { documentaryTableData } = state;
+
+	// console.log("documentaryTableData  --- mapStateToProps");
+	// console.log(documentaryTableData);
 	return {
-		directoryTreeReducers
+		documentaryTableData
 	};
 };
 
 
 export default connect(
-	mapStateToProps
+	mapStateToProps,
+	{
+		handleDocumentTableData
+	}
 )(MainDocManagementTable);

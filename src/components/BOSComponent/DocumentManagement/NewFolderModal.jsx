@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import {
@@ -17,9 +17,14 @@ import {
     addNewFolderModal
 } from "./../../../actions/index.jsx";
 
+import API from "./../../../utils/api.js";
+
 const NewFolderModal = ({ handleNewFolderModal, addNewFolderModal, form }) => {
 
     let { getFieldDecorator } = form;
+
+    let [dirName, setDirName] = useState("");
+    let [discription, setDiscription] = useState("");
 
     let formItemLayout = {
         labelCol: {
@@ -33,16 +38,43 @@ const NewFolderModal = ({ handleNewFolderModal, addNewFolderModal, form }) => {
     };
 
     useEffect(() => {
-        console.log("handleNewFolderModal");
-        console.log(handleNewFolderModal);
+        // console.log("handleNewFolderModal");
+        // console.log(handleNewFolderModal);
     }, []);
+
+    //控制
+    let handleCreateDirectory = () => {
+        let params = [
+            {
+            	"bosclass": "folders",
+            	"code": new Date().getTime(),
+            	"description": discription,
+            	"isRoot": true,
+            	"parent": "",
+            	"name": dirName
+            }
+        ];
+
+        params = JSON.stringify(params);
+
+        let response = API.createRootDirectory(params);
+        console.log(response);
+        console.log(response);
+
+        response.then(() => {
+            //Modal消失
+            addNewFolderModal(false)
+        });
+
+
+    };
 
     return(
         <React.Fragment>
             <Modal
                 visible={ handleNewFolderModal.isVisible }
                 title={ ADD_NEW_FOLDER_MODAL }
-                onOk={ () => { addNewFolderModal(false) } }
+                onOk={ () => { handleCreateDirectory() } }
                 onCancel={ () => { addNewFolderModal(false) } }
             >
                 <Form>
@@ -59,7 +91,9 @@ const NewFolderModal = ({ handleNewFolderModal, addNewFolderModal, form }) => {
                                         message: "Please input your Folder Name!"
                                     }]
                                 })(
-                                    <Input />
+                                    <Input
+                                        onChange={ e => setDirName(e.target.value) }
+                                    />
                                 )
                             }
                         </Form.Item>
@@ -78,7 +112,9 @@ const NewFolderModal = ({ handleNewFolderModal, addNewFolderModal, form }) => {
                                         message: "Please input your Folder Name!"
                                     }]
                                 })(
-                                    <Input />
+                                    <Input 
+                                        onChange={ e => setDiscription(e.target.value) }
+                                    />
                                 )
                             }
                         </Form.Item>
