@@ -27,7 +27,7 @@ module.exports = {
 	devServer: {
 		contentBase: path.join(__dirname, "dist"),
 		hot: true,
-		host: "192.168.1.15",
+		host: "localhost",
 		port: 8080,
 		historyApiFallback: true
 	},
@@ -45,6 +45,11 @@ module.exports = {
 		runtimeChunk: "single",
 		splitChunks: {
 			chunks: "all"
+		}
+	},
+	resolve: {
+		alias: {
+			"@": path.resolve(__dirname, "src")
 		}
 	}
 };

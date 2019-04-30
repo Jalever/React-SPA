@@ -18,6 +18,11 @@ import {
 } from "./../../../actions/index.jsx";
 
 import API from "./../../../utils/api.js";
+import Cookies from "js-cookie";
+var userInfo = Cookies.get("userInfo");
+if(userInfo) {
+    userInfo = JSON.parse(userInfo);
+}
 
 const NewFolderModal = ({ handleNewFolderModal, addNewFolderModal, form }) => {
 
@@ -47,20 +52,16 @@ const NewFolderModal = ({ handleNewFolderModal, addNewFolderModal, form }) => {
         let params = [
             {
             	"bosclass": "folders",
-            	"code": new Date().getTime(),
+            	"code": `${new Date().getTime()}`,
             	"description": discription,
             	"isRoot": true,
             	"parent": "",
             	"name": dirName
             }
         ];
-
         params = JSON.stringify(params);
 
         let response = API.createRootDirectory(params);
-        console.log(response);
-        console.log(response);
-
         response.then(() => {
             //Modal消失
             addNewFolderModal(false)
@@ -112,7 +113,7 @@ const NewFolderModal = ({ handleNewFolderModal, addNewFolderModal, form }) => {
                                         message: "Please input your Folder Name!"
                                     }]
                                 })(
-                                    <Input 
+                                    <Input
                                         onChange={ e => setDiscription(e.target.value) }
                                     />
                                 )

@@ -1,5 +1,5 @@
 import React from "react";
-import AddTodoComponent from "./../AddTodoComponent/index.jsx";
+import AddTodoComponent from "@/components/AddTodoComponent/index.jsx";
 import TodoListComponent from "./../TodoListComponent/index.jsx";
 import VisibilityFilterBar from "./../VisibilityFilterBar/index.jsx";
 

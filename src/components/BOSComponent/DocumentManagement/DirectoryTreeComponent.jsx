@@ -61,6 +61,7 @@ const DirectoryTreeComponent = ({ directoryTreeReducers,handleSelectedDirectory,
         	"order": "asc"
         };
 
+        //页面左侧文档树数据申请
         let response = API.fetchFoldersDocuments(JSON.stringify(params), userInfo.access_token);
         response.then(res => {
 
@@ -261,9 +262,9 @@ const DirectoryTreeComponent = ({ directoryTreeReducers,handleSelectedDirectory,
         // console.log(node.node.props.title);
         // console.log("\n");
         //
-        // console.log("clicked node key --- onSelect");
-        // console.log(key);
-        // console.log("\n");
+        console.log("clicked node --- onSelect");
+        console.log(node);
+        console.log("\n");
 
         handleSelectedDirectory(...key);
 

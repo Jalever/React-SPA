@@ -29,7 +29,7 @@ const TodoItem = ({ todoItem, toggleTodo }) => {
 						todoItem && todoItem.completed && "completed"
 					)}
 				>
-					{todoItem.content}
+					{ todoItem.content }
 				</span>
 			}
 		</li>

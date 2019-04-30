@@ -24,7 +24,10 @@ import qs from "qs";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const userInfo = Cookies.get("userInfo");
+var userInfo = Cookies.get("userInfo");
+if(Cookies.get("userInfo")) {
+    userInfo = JSON.parse(userInfo);
+}
 
 const METHOD = {
 	GET: "get",
@@ -70,13 +73,13 @@ const xhrRequest = (method, url, isAsync) => {
 	});
 };
 
-const fetchRequest = (url = ``, methods = METHOD.GET, jsonType = true, authorization = "", data = {}) => {
+const fetchRequest = (url = ``, methods = METHOD.GET, formType = true, authorization = "", data = {}) => {
 	return fetch(url,{
 		method: methods,
 		mode: "cors",
 		cache: "no-cache",
 		headers: {
-			"Content-Type": jsonType ? "multipart/form-data" : "application/json",
+			"Content-Type": formType ? "multipart/form-data" : "application/json",
 			"Authorization": authorization
 		},
 		body: data
@@ -122,5 +125,5 @@ export default {
 	getSubDirectoryTree: key => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders/` + key + `folders/noRelation=false`), METHOD.GET, true, userInfo.access_token),
 	postFile: (appKey, data, autho) => fetchRequestFile(`http://bosapi-demo.rickricks.com/bosdocumentservice/${appKey}/files`, METHOD.POST, data, false, autho),
 	//BOS
-	createRootDirectory: params => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders`), METHOD.POST, true, userInfo.access_token, params)
+	createRootDirectory: params => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders`), METHOD.POST, false, userInfo.access_token, params)
 };
