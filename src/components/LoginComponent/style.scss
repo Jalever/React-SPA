@@ -2,20 +2,31 @@ $disabled-color: fade(#000, 25%);
 $font-size-base: 14px;
 
 .loginForm {
-	// width: 388px;
-	min-height: 100vh;
-	background-color: #f6f5f5;
+	width: 388px;
 	margin: 0 auto;
-	// @media screen and ( max-width: 576px) {
-	// 	width: 95%;
-	// }
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	// min-height: 100vh;
+	// background-color: #f6f5f5;
+	// margin: 0 auto;
+	// // @media screen and ( max-width: 576px) {
+	// // 	width: 95%;
+	// // }
+	// display: flex;
+	// justify-content: center;
+	// align-items: center;
 }
 
+.ant-tabs-bar {
+	text-align: center;
+	border-bottom: none;
+}
 
 .prefixIcon {
 	color: $disabled-color;
 	font-size: $font-size-base;
+}
+
+
+.submit {
+	width: 100%;
+	margin-top: 24px;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
     Tabs,
@@ -16,21 +16,50 @@ import {
 
 import LoginTab from "./LoginTab";
 import LoginSubmit from "./LoginSubmit";
+import LoginItem from "./LoginItem";
 
 let Login = props => {
 
-    //登录页面tabs数组
+    // console.log("props   --- components/LoginComponent/Login.js");
+    // console.log(props);
+    // console.log(`\n`);
+
+    //存储context中tabUtil的tabs id集
     let [tabsArr, setTabsArr] = useState([]);
+
+    //登录页面tabs数组
+    let [tabsChildrenArr, setTabsChildrenArr] = useState([]);
+
     //登录页面非tabs数组
-    let [nonTabsArr, setNonTabsArr] = useState([]);
+    let [nonTabsChildrenArr, setNonTabsChildrenArr] = useState([]);
+
+    //active的tabs中的fieldsnames
+    let [activeFields, setActiveFields] = useState({});
+
+    //传参父组件的defaultActiveKey
+    let {
+        defaultActiveKey,
+        handleChangeTab
+    } = props;
 
     let {
         getFieldDecorator
     } = props.form;
 
-    console.log("props   --- components/LoginComponent/Login");
-    console.log(props);
-    console.log(`\n`);
+    //pseudo-componentDidMount
+    useEffect(() => {
+            React.Children.forEach(props.children, item => {
+                if(!item) return;
+
+                if (item.type.typeName === 'LoginTab') {
+                    //children为标签tab
+                    tabsChildrenArr.push(item);
+                } else {
+                    //children不是标签tab
+                    nonTabsChildrenArr.push(item);
+                }
+            });
+    }, []);
 
     //submit事件，调用父组件handleSubmit
     let handleSubmit = e => {
@@ -41,7 +70,7 @@ let Login = props => {
             onSubmit
         } = props;
 
-        form.validateField(null, { force: true }, (err, values) => {
+        form.validateFields(["username", "password"], { force: true }, (err, values) => {
             onSubmit(err, values);
         });
     };
@@ -50,73 +79,55 @@ let Login = props => {
     let getContext = () => {
         let { form } = props;
 
-        console.log("props - Login.js");
-        console.log(props);
-        console.log("\n");
-
         return {
             //操作（添加，删除）tab方法
             tabUtil: {
                 addTab: id => {
-                    setTabsArr([...tabsArr, id]);
+                    setTabsArr([...tabsChildrenArr, id]);
                 },
                 removeTab: id => {
                     tabsArr.filter( currentId => currentId !== id );
                 }
             },
+            
             //传送form方法
-            form
-        };
+            form,
 
+            //tabs变化时包含的fieldnames
+            updateActive: activeKey => {
+                if(activeFields[defaultActiveKey]) {
+                    activeFields[defaultActiveKey].push(activeKey);
+                } else {
+                    activeFields[defaultActiveKey] = [defaultActiveKey];
+                }
+            }
+        };
     };
 
-    React.Children.forEach(props.children, item => {
-        if(!item) return;
-
-        console.log("item   --- components/LoginComponent/Login");
-        console.log(item);
-        console.log(`\n`);
-
-        if (item.type.typeName === 'LoginTab') {
-            //children为标签tab
-            tabsArr.push(item);
-        } else {
-            //children不是标签tab
-            nonTabsArr.push(item);
-        }
-    });
 
     return(
-        <LoginContext.Provider value={getContext()}>
+        <LoginContext.Provider value={ getContext() }>
             {
                 <Form
-                    onSubmit={ () => handleSubmit() }
+                    onSubmit={ e => handleSubmit(e) }
                 >
                     {
                         tabsArr.length ? (
                             <React.Fragment>
                                 {
-                                    <Tabs>
-                                        { tabsArr }
+                                    <Tabs
+                                        animated={ false }
+                                        activeKey={ defaultActiveKey }
+                                        onChange={ activeKey => handleChangeTab(activeKey) }
+                                    >
+                                        { tabsChildrenArr }
                                     </Tabs>
                                 }
 
-                                { nonTabsArr }
+                                { nonTabsChildrenArr }
                             </React.Fragment>
                         ) : (
-                            <Form.Item>
-                                {
-                                    getFieldDecorator("userName", {
-                                        rules: [{
-                                            required: true,
-                                            message: `Please input your username!`
-                                        }]
-                                    })(<Input
-                                        prefix={<Icon type="user" style={{ color: "rgba(0, 0, 0, 0.25)" }}/>}
-                                        placeholder={USERNAME}
-                                    />)
-                                }
-                            </Form.Item>
+                            props.children
                         )
                     }
                 </Form>
@@ -129,4 +140,7 @@ let Login = props => {
 
 Login.Tab = LoginTab;
 Login.Submit = LoginSubmit;
+Object.keys(LoginItem).forEach(item => {
+    Login[item] = LoginItem[item];
+});
 export default Form.create()(Login);

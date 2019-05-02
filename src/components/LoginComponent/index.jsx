@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React,{ useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Cookies from "js-cookie";
@@ -40,7 +40,9 @@ import {
 import Login from "./Login";
 const {
 	Tab,
-	Submit
+	Submit,
+	Username,
+	Password
 } = Login;
 
 import API from "@/utils/api.js";
@@ -48,24 +50,33 @@ import "./style.scss";
 
 
 let LoginComponent = () => {
+	//Tabs被选中的以及相应事件
+	let [activeTabPane, setActiveTabPane] = useState("account");
 
-	let handleSubmit = () => {
-		e.preventDefault();
-
-		console.log(`handleSubmit --- components/LoginComponent/index.jsx`);
+	//submit event
+	let handleSubmit = (err, values) => {
+	    console.log("err   --- components/LoginComponent/Index");
+	    console.log(err);
+	    console.log("values   --- components/LoginComponent/Index");
+	    console.log(values);
 	};
 
 	return(
-		<React.Fragment>
+		<div
+			className="loginForm"
+		>
 			<Login
-				onSubmit={ () => handleSubmit()}
+				onSubmit={ e => handleSubmit(e) }
+				defaultActiveKey={ activeTabPane }
+				handleChangeTab={ activeKey => setActiveTabPane(activeKey) }
 			>
 				{
 					<Tab
 						key="account"
 						tab={ LOGIN_ACCOUNT_PASSWORD }
 					>
-
+						<Username />
+						<Password />
 
 					</Tab>
 				}
@@ -80,12 +91,13 @@ let LoginComponent = () => {
 					</Tab>
 				}
 
-				<Submit>
+				<Submit
+				>
 					{ LOGIN }
 				</Submit>
 
 			</Login>
-		</React.Fragment>
+		</div>
 	);
 };
 

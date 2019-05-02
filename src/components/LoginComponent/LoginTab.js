@@ -5,31 +5,24 @@ const { TabPane } = Tabs;
 
 import LoginContext from "./loginContext";
 
-// let generateID = (() => {
-//     let i = 0;
-//     return (prefix = "") => {
-//         return `${prefix}${i}`;
-//     };
-// })();
+let generateID = (() => {
+    let i = 0;
+    return (prefix = "") => {
+        i += 1;
+        return `${prefix}${i}`;
+    };
+})();
 
 let LoginTab = props => {
+    let [uniqueId, setUniqueId] = useState(generateID("login-tab-"));
 
-    console.log("props - LoginTab - LoginContextConsumer --- LoginTab");
-    console.log(props);
-    console.log(`\n`);
+    let {
+        tabUtil
+    } = props;
 
-    // //unique ID
-    // let [uniqueID, setUniqueID] = useState(() => {
-    //     return
-    // });
-
-    // useEffect(() => {
-    //     const {
-    //         tabUtil
-    //     } = props;
-    //
-    //     tabUtil.addTab(uniqueID);
-    // }, []);
+    useEffect(() => {
+        tabUtil.addTab(uniqueId);
+    }, []);
 
     return(
         <React.Fragment>
