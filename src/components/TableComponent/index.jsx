@@ -32,13 +32,16 @@ class TableComponent extends React.Component {
 		let resData = API.requestTabeData();
 		resData.then( res => {
 
+			// console.log("res");
+			// console.log(res);
+			// console.log("\n");
 			this.setState({
-				data: res.userInfo
+				data: res.list
 			});
 		} );
 
-		console.log("this.props.userInfo");
-		console.log(this.props.userInfo);
+		// console.log("this.props.userInfo");
+		// console.log(this.props.userInfo);
 	}
 
 	handleResponseData() {
@@ -69,6 +72,10 @@ class TableComponent extends React.Component {
 		let tableHead = [];
 
 		if(data !== null) {
+
+			// console.log("data");
+			// console.log(data);
+			// console.log("\n");
 			let oneofdata = data[0];
 			for(let i in oneofdata) {
 				tableHead.push({
@@ -115,20 +122,20 @@ class TableComponent extends React.Component {
 				**/}
 
 				{
-					(!isShowLoading) && <Table 
+					(!isShowLoading) && <Table
 						className="tableStyle"
 						rowKey={ record => record.id }
 						bordered
 						columns={ tableHead }
 						dataSource={ data }
-						
+
 					/>
 				}
 
 				{
-					(isShowLoading) && <Spin 
+					(isShowLoading) && <Spin
 						size="large"
-						tip="Loading..." 
+						tip="Loading..."
 						className="spining"
 					/>
 				}

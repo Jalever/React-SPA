@@ -115,8 +115,17 @@ const fetchRequestFile = (url = ``, methods = METHOD.POST, data, jsonType = fals
 };
 
 export default {
-	login: params => request(hydrateBOSAPI(`/${BOS_CENTER_SERVICE}/account/login`), params, METHOD.POST, true, true),
-	requestTabeData: () => xhrRequest(METHOD.GET, hydrateAliyunAPI("/data"), true),
+	// login: params => request(hydrateBOSAPI(`/${BOS_CENTER_SERVICE}/account/login`), params, METHOD.POST, true, true),
+	requestTabeData: () => xhrRequest(METHOD.GET, hydrateAliyunAPI("/chart/table"), true),
+
+	//Pseudo Ant Design Pro
+	login: params => fetchRequest(hydrateAliyunAPI("/login"), METHOD.POST, false, null, params),
+	createNewTodoItem: params => fetchRequest(hydrateAliyunAPI("/tasks"), METHOD.POST, false, null, params),
+	getAllTasks: () => fetchRequest(hydrateAliyunAPI("/tasks"), METHOD.GET, false, null, null),
+	removeATask: id => fetchRequest(hydrateAliyunAPI(`/tasks/${id}`), METHOD.DELETE, false, null, null),
+
+
+
 	//发送验证码
 	getValidationCode: data => fetchRequest(hydrateBOSAPI(`/${BOS_CENTER_SERVICE}/account/validateCode`), METHOD.POST, true, data),
 	getRandomUser: data => fetchRequest("https://randomuser.me/api/?results=10", METHOD.GET, true, "", data),
@@ -124,6 +133,7 @@ export default {
 	fetchFoldersDocuments: (params, auth) => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders/folders&documents`), METHOD.POST, false, auth, params),
 	getSubDirectoryTree: key => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders/` + key + `folders/noRelation=false`), METHOD.GET, true, userInfo.access_token),
 	postFile: (appKey, data, autho) => fetchRequestFile(`http://bosapi-demo.rickricks.com/bosdocumentservice/${appKey}/files`, METHOD.POST, data, false, autho),
+
 	//BOS
 	createRootDirectory: params => fetchRequest(hydrateBOSAPI(`/${BOS_DOCUMENT_SERVICE}/${APP_KEY}/folders`), METHOD.POST, false, userInfo.access_token, params)
 };

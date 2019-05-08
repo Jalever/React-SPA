@@ -39,8 +39,8 @@ const ImageComponent = ({determineItem}) => {
 	useEffect( () => {
 		let res = API.getRandomUser(null);
 		res.then(data => {
-			console.log("data.results");
-			console.log(data.results);
+			// console.log("data.results");
+			// console.log(data.results);
 			setResponse(data.results);
 		})
 	}, [] );
@@ -74,7 +74,7 @@ const ImageComponent = ({determineItem}) => {
 				actions={ [
 					<Icon type="setting" />,
 					<Link to={`/home/images/:${item.id.value}`}>
-						<Icon 
+						<Icon
 							type="edit"
 							onClick={() => determineItem(item)}
 						/>
@@ -83,9 +83,9 @@ const ImageComponent = ({determineItem}) => {
 				] }
 			>
 				{
-					<Meta 
+					<Meta
 						avatar={
-							<Avatar 
+							<Avatar
 								src={item.picture.medium}
 							/>
 						}
@@ -109,15 +109,15 @@ const ImageComponent = ({determineItem}) => {
 	return(
 		<React.Fragment>
 			{
-				(response === null) && <Spin 
+				(response === null) && <Spin
 					tip="Loading..."
 					className="spin"
 				/>
 			}
 
 			{
-				(response !== null) && 
-				<List 
+				(response !== null) &&
+				<List
 				    grid={{ gutter: 4, column: 4 }}
 					dataSource={ response }
 					renderItem={

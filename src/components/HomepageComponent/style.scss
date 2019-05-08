@@ -6,9 +6,10 @@
 .homepage {
 	width: 100%;
 	height: 100vh;
-	min-height: 500px;
+	min-height: 400px;
 	background-color: #eaeaea;
 	display: flex;
+	overflow-x: hidden;
 	flex-direction: column;
 
 
@@ -23,10 +24,12 @@
 
 	.content {
 		width: 100vw;
+		min-width: 1000px;
 		// height: 10vh;
 		flex-grow: 9;
 		border: none;
 		background-color: #eaeaea;
+		// background-color: #ff0000;
 	}
 
 	.footer {
@@ -37,7 +40,7 @@
 		line-height: 8vh;
 		background-color: #c3cfe2;
 
-		text-align: center; 
+		text-align: center;
 		margin: 0;
 		padding: 0;
 		cursor: default;

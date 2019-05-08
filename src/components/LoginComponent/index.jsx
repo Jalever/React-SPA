@@ -11,7 +11,6 @@ import {
 	Icon,
 	Form
 } from "antd";
-
 import "antd/dist/antd.css";
 
 import {
@@ -32,7 +31,10 @@ import {
 import {
 	LOGIN_ACCOUNT_PASSWORD,
 	LOGIN_MOBILE,
-	LOGIN
+	LOGIN,
+	ACCOUNT_LOGIN_SIGN_IN_WITH,
+	ACCOUNT_LOGIN_FORGOT_PASSWORD,
+	ACCOUNT_LOGIN_REMEMBER_ME
 } from "@/constants/login";
 
 // import axios from "axios";
@@ -42,23 +44,42 @@ const {
 	Tab,
 	Submit,
 	Username,
-	Password
+	Password,
+	Mobile
 } = Login;
 
 import API from "@/utils/api.js";
 import "./style.scss";
 
 
-let LoginComponent = () => {
+let LoginComponent = props => {
 	//Tabs被选中的以及相应事件
 	let [activeTabPane, setActiveTabPane] = useState("account");
 
 	//submit event
 	let handleSubmit = (err, values) => {
-	    console.log("err   --- components/LoginComponent/Index");
-	    console.log(err);
-	    console.log("values   --- components/LoginComponent/Index");
-	    console.log(values);
+		// console.log("err   --- components/LoginComponent/Index");
+	    // console.log(err);
+
+	    if(!err) {
+			console.log("submit and login successfully!");
+
+		    console.log("values   --- components/LoginComponent/Index");
+		    console.log(values);
+
+			let response = API.login(JSON.stringify(values));
+			response.then(res => {
+				console.log("res - index.jsx");
+				console.log(res);
+				console.log("\n");
+				props.history.push("/home");
+				// console.log("props");
+				// console.log(props);
+				// console.log("\n");
+			});
+		}
+
+
 	};
 
 	return(
@@ -66,7 +87,7 @@ let LoginComponent = () => {
 			className="loginForm"
 		>
 			<Login
-				onSubmit={ e => handleSubmit(e) }
+				onSubmit={ (err, values) => handleSubmit(err, values) }
 				defaultActiveKey={ activeTabPane }
 				handleChangeTab={ activeKey => setActiveTabPane(activeKey) }
 			>
@@ -86,15 +107,53 @@ let LoginComponent = () => {
 						key="mobile"
 						tab={ LOGIN_MOBILE }
 					>
-
+						<Mobile />
 
 					</Tab>
 				}
 
-				<Submit
-				>
-					{ LOGIN }
-				</Submit>
+				{
+					<div>
+						<Checkbox>
+							{ ACCOUNT_LOGIN_REMEMBER_ME }
+						</Checkbox>
+
+						<a
+							className="login-form-forgot"
+							href=""
+						>{ ACCOUNT_LOGIN_FORGOT_PASSWORD }</a>
+					</div>
+				}
+
+				{
+					<Submit
+					>
+						{ LOGIN }
+					</Submit>
+				}
+
+				{ /*signin with other application && redirect to Signup page*/ }
+				{
+					<div
+						className="other"
+					>
+						<span>{ ACCOUNT_LOGIN_SIGN_IN_WITH }</span>
+						<Icon
+							type="google"
+							className="signin-icon"
+						/>
+
+						<Icon
+							type="facebook"
+							className="signin-icon"
+						/>
+
+						<Icon
+							type="github"
+							className="signin-icon"
+						/>
+					</div>
+				}
 
 			</Login>
 		</div>

@@ -65,12 +65,18 @@ let Login = props => {
     let handleSubmit = e => {
         e.preventDefault();
 
+        // console.log("activeFields --- Login.js");
+        // console.log(activeFields);
+        // console.log("\n");
+
         let {
             form,
             onSubmit
         } = props;
 
-        form.validateFields(["username", "password"], { force: true }, (err, values) => {
+        // let val = form.getFieldsValue(activeFields[defaultActiveKey]);
+
+        form.validateFields(activeFields[defaultActiveKey], { force: true }, (err, values) => {
             onSubmit(err, values);
         });
     };
@@ -89,17 +95,20 @@ let Login = props => {
                     tabsArr.filter( currentId => currentId !== id );
                 }
             },
-            
+
             //传送form方法
             form,
 
             //tabs变化时包含的fieldnames
-            updateActive: activeKey => {
+            updateActive: name => {
                 if(activeFields[defaultActiveKey]) {
-                    activeFields[defaultActiveKey].push(activeKey);
+                    activeFields[defaultActiveKey].push(name);
                 } else {
-                    activeFields[defaultActiveKey] = [defaultActiveKey];
+                    activeFields[defaultActiveKey] = [name];
                 }
+                // console.log("activeFields");
+                // console.log(activeFields);
+                // console.log("\n");
             }
         };
     };

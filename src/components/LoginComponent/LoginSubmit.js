@@ -9,10 +9,10 @@ const FormItem = Form.Item;
 import "./style.scss";
 
 let LoginSubmit = props => {
-    
-    console.log("props --- LoginSubmit");
-    console.log(props);
-    console.log("\n");
+
+    // console.log("props --- LoginSubmit");
+    // console.log(props);
+    // console.log("\n");
 
     return(
         <FormItem>

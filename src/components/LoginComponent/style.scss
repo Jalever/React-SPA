@@ -1,5 +1,7 @@
 $disabled-color: fade(#000, 25%);
 $font-size-base: 14px;
+$primary-color: #1890ff;
+
 
 .loginForm {
 	width: 388px;
@@ -25,8 +27,35 @@ $font-size-base: 14px;
 	font-size: $font-size-base;
 }
 
-
 .submit {
 	width: 100%;
 	margin-top: 24px;
+}
+
+.login-form-forgot {
+	float: right;
+}
+
+.signin-icon {
+    margin-left: 16px;
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $primary-color;
+    }
+}
+
+
+.other {
+	margin-top: 24px;
+	line-height: 22px;
+	text-align: left;
+
+	.register {
+		float: right;
+	}
 }

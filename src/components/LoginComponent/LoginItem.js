@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LoginContext from "./loginContext";
 import LoginTabChildren from "./LoginTabChildren";
 
@@ -13,13 +13,25 @@ const FormItem = Form.Item;
 import "./style.scss";
 
 let WrapLoginItem = props => {
-    console.log("props --- LoginItem");
-    console.log(props);
-    console.log("\n");
+    // console.log("props --- LoginItem");
+    // console.log(props);
+    // console.log("\n");
 
     let {
         getFieldDecorator
     } = props.form;
+
+    useEffect(() => {
+        let {
+            name,//LoginItem's name
+            updateActive //add name to activeFields array in Login.js
+        } = props;
+
+        if(updateActive) {
+            updateActive(name);
+        }
+
+    }, []);
 
     return(
         <React.Fragment>
@@ -53,6 +65,7 @@ Object.keys(LoginTabChildren).forEach(curValue => {
                         name={`${item.name}`}
                         type={ curValue }
                         form={ value.form }
+                        updateActive={ value.updateActive }
                     />;
                 }
             }

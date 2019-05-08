@@ -24,11 +24,12 @@ import {
 import HeaderComponent from "./../Header/index.jsx";
 import FooterComponent from "./../Footer/index.jsx";
 import ImageComponent from "./../ImageComponent/index.jsx";
-import TodoContentComponent from "./../TodoContent/index.jsx";
+// import TodoContentComponent from "./../TodoContent/index.jsx";
 import TableComponent from "./../TableComponent/index.jsx";
 import BOSComponent from "./../BOSComponent/index.jsx";
 import UserInfoComponent from "./../UserInfoComponent/index.jsx";
 import ProfileComponent from "./../ProfileComponent/index.jsx";
+import TodoList from "@/components/TodoListComponent/index";
 
 import { SIGNOUT_BUTTON } from "./../../constants/todolist.jsx";
 
@@ -68,10 +69,10 @@ const HomepageComponent = ({ clientHeight, scrollHeight }) => {
 					<Switch>
 						<Route exact path="/home" component={TableComponent}/>
 
-						<Route exact path="/home/images" component={ImageComponent}/>
+						<Route exact path="/home/images" component={ImageComponent} />
 						<Route path="/home/images/:profileID" component={ProfileComponent}/>
 
-						<Route exact path="/home/todolist" component={TodoContentComponent}/>
+						<Route exact path="/home/todolist" component={TodoList} />
 						<Route path="/home/bos" component={BOSComponent}/>
 						<Route exact path="/home/userInfo" component={UserInfoComponent}/>
 					</Switch>

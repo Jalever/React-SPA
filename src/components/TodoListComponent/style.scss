@@ -1,3 +1,4 @@
+
 .customeTable {
 	width: 85%;
 	margin: 10px auto;
@@ -16,8 +17,39 @@
 	}
 }
 
+.todolist {
+	width: 90%;
+	background-color: #F8F8FF;
+	margin: 0 auto;
+
+}
+
 .customUl {
 	width: 80%;
 	margin: 1rem auto;
 	list-style-type: none;
+	background-color: #defcfc;
+}
+.li-imcompleted {
+	text-decoration: line-through;
+	color: #ccc;
+}
+
+.customLi {
+	background-color: #fafafa;
+	margin-top: 5px;
+	padding: 0.6rem;
+	cursor: pointer;
+}
+
+.item-content {
+	width: 60%;
+	outline: none;
+	border: none;
+}
+
+.addTodo-div {
+	margin: 0.5rem;
+	margin-left: auto;
+	margin-right: auto;
 }
